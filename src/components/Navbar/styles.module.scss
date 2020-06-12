@@ -1,0 +1,27 @@
+.nav {
+  display: flex;
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+  }
+}
+
+.nav-link {
+  align-items: center;
+  flex: 1 1 100%;
+  display: flex;
+  margin: 0;
+
+  &__icon {
+    flex: 0 0;
+    margin: 0;
+    padding: 1rem;
+  }
+
+  &__text {
+    flex: 1 1;
+    padding: 1rem 0;
+  }
+}

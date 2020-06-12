@@ -1,3 +1,5 @@
+import ICONS from 'constants/icons';
+
 import Dashboard from 'screens/Dashboard';
 import Alarms from 'screens/Alarms';
 
@@ -8,6 +10,7 @@ const ROUTES = {
     name: 'dashboard',
     path: '/dashboard',
     component: Dashboard,
+    icon: ICONS.EQUALIZER,
   },
   ALARMS: {
     id: 10,
@@ -15,6 +18,7 @@ const ROUTES = {
     name: 'alarms',
     path: '/alarms',
     component: Alarms,
+    icon: ICONS.NOTIFICATIONS,
   },
 };
 
