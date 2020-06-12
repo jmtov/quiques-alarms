@@ -1,0 +1,63 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.app__header {
+  align-items: center;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.header {
+  &__logo {
+    margin-bottom: 2rem;
+    max-width: 5rem;
+  }
+
+  &__title {
+    color: #222;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: #555;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+
+@keyframes logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .header__logo {
+    animation: logo-spin infinite 2s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem;
+    }
+  }
+}
