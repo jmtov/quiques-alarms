@@ -1,29 +1,30 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import ROUTES, { BASE_ROUTE } from 'constants/routes';
+import ROUTES_OBJECT, { BASE_ROUTE } from 'constants/routes';
 
 import Layout from 'components/Layout';
 
-function Routes() {
-  const routes = Object.values(ROUTES);
+const ROUTES = Object.values(ROUTES_OBJECT);
 
+function Routes() {
   return (
-    <Switch>
-      <Layout>
-        {routes.map(route => (
+    <Layout>
+      <Switch>
+        {ROUTES.map(route => (
           <Route
             key={route.id}
+            name={route.name}
             path={route.path}
             exact={route.exact}
             component={route.component}
           />
         ))}
-      </Layout>
-      <Route path={BASE_ROUTE.path}>
-        <Redirect to={ROUTES.DASHBOARD.path} />
-      </Route>
-    </Switch>
+        <Route path={BASE_ROUTE.path}>
+          <Redirect to={ROUTES_OBJECT.DASHBOARD.path} />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 

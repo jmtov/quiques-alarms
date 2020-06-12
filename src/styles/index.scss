@@ -1,5 +1,7 @@
-@import './icons/icons.scss';
+@import './variables/colors';
+@import './variables/fonts';
 @import './common.scss';
+@import './icons/icons.scss';
 
 * {
   border: 0;
@@ -10,6 +12,7 @@
 }
 
 body {
+  background-color: var(--bg-color);
   font-family: 'Helvetica Neue', 'Roboto', 'Arial',  sans-serif;
   font-size: 16px;
   letter-spacing: -1px;

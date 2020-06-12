@@ -5,18 +5,18 @@ import ROUTES from 'constants/routes';
 
 import Icon from 'components/Icon';
 
-import styles from './styles.module.scss';
+import './styles.scss';
 
 function Navbar() {
   const navLinks = Object.values(ROUTES);
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles['nav__links']}>
+    <nav className="nav">
+      <ul className="nav__links">
         {navLinks.map(route => (
-          <NavLink key={route.id} className={styles['nav-link']} to={route.path}>
-            <Icon className={styles['nav-link__icon']} name={route.icon} />
-            <span className={styles['nav-link__text']}>{route.name.toUpperCase()}</span>
+          <NavLink key={route.id} className="nav-link" activeClassName="nav-link--active" to={route.path}>
+            <Icon className="nav-link__icon" name={route.icon} />
+            <span className="nav-link__text">{route.title}</span>
           </NavLink>
         ))}
       </ul>

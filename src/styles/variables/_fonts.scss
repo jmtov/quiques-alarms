@@ -1,0 +1,11 @@
+:root {
+  --fs-title: 2rem;
+  --fs-subtitle: 1.5rem;
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --fs-title: 1.3rem;
+    --fs-subtitle: 1.25rem;
+  }
+}
