@@ -1,0 +1,54 @@
+.topbar {
+  align-items: center;
+  border-bottom: thin solid var(--fg-color--translucent-200);
+  display: flex;
+  width: 100%;
+
+  &__logo {
+    flex: 0 0 auto;
+    height: 5rem;
+    margin-right: 0.75rem;
+    padding: 1rem;
+    width: 5rem;
+  }
+
+  &__title {
+    display: flex;
+    font-size: var(--fs-title);
+    flex: 0 0 auto;
+  }
+
+  &__actions {
+    align-self: stretch;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+.action-button {
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &__icon {
+    flex: 0 0;
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .topbar {
+    &__logo {
+      height: 3rem;
+      margin: 0 0.5rem;
+      object-fit: contain;
+      padding: 0.5rem;
+      width: 3rem;
+    }
+  }
+}

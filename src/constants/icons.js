@@ -1,0 +1,16 @@
+export default {
+  ERROR_OUTLINE: 'icon-error_outline',
+  EQUALIZER: 'icon-equalizer',
+  PAUSE: 'icon-pause',
+  PLAY_ARROW: 'icon-play_arrow',
+  ADD: 'icon-add',
+  CLEAR: 'icon-clear',
+  CREATE: 'icon-create',
+  REMOVE: 'icon-remove',
+  KEYBOARD_ARROW_DOWN: 'icon-keyboard_arrow_down',
+  NOTIFICATIONS: 'icon-notifications',
+  NOTIFICATIONS_NONE: 'icon-notifications_none',
+  NOTIFICATIONS_ACTIVE: 'icon-notifications_active',
+  DELETE: 'icon-delete',
+  SEARCH: 'icon-search',
+};
