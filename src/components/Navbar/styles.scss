@@ -7,6 +7,7 @@
   left: 0;
   max-height: 100%;
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
 
   &__logo {
@@ -79,7 +80,7 @@
     bottom: 0;
     flex-direction: row;
     overflow: auto;
-    position: sticky;
+    top: unset;
 
     &__links {
       flex-direction: row;

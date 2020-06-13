@@ -2,11 +2,9 @@ import React from 'react';
 import { string } from 'prop-types';
 
 import Logo from 'assets/logo.png';
-import ICONS from 'constants/icons';
-
-import Icon from 'components/Icon';
 
 import Title from './components/Title';
+import Notifications from './components/Notifications';
 import './styles.scss';
 
 function Topbar() {
@@ -15,9 +13,7 @@ function Topbar() {
       <img src={Logo} className="topbar__logo" alt="logo" />
       <Title className="topbar__title" />
       <div className="topbar__actions">
-        <button className="action-button">
-          <Icon className="action-button__icon" name={ICONS.ERROR_OUTLINE} />
-        </button>
+        <Notifications />
       </div>
     </div>
   );

@@ -1,7 +1,40 @@
-import ApolloClient from 'apollo-boost';
+import { split } from 'apollo-link';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+import { ApolloClient } from 'apollo-client';
+
+const apiURL = process.env.REACT_APP_API_ENDPOINT;
+const apiWSURL = process.env.REACT_APP_API_WS_ENDPOINT;
+
+const httpLink = new HttpLink({
+  uri: apiURL,
+});
+
+const wsLink = new WebSocketLink({
+  uri: apiWSURL,
+  options: {
+    reconnect: true,
+  },
+});
+
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
+
+const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  uri: 'https://quiques-alarms.herokuapp.com/v1/graphql',
+  cache,
+  link
 });
 
 export default client;
