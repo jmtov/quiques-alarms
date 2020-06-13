@@ -1,5 +1,8 @@
 .field {
+  align-items: center;
+  display: flex;
   height: 100%;
+  width: 100%;
 
   &--disabled,
   &--read-only {
@@ -16,8 +19,7 @@
     border: thin solid var(--fg-color--translucent-200);
     display: flex;
     outline-width: 2px;
-    padding: 0.75rem;
+    padding: 0.5rem;
     transition: border 0.2s;
-    width: 100%;
   }
 }

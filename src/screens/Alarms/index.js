@@ -1,8 +1,9 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import ALARMS_QUERY from './queries';
 import Alarm from 'components/Alarm';
+
+import ALARMS_QUERY from './queries';
 
 function Alarms() {
   const { loading, error, data } = useQuery(ALARMS_QUERY);
@@ -12,7 +13,7 @@ function Alarms() {
   if (error) return <h1>Error :/</h1>;
 
   return (
-    <>
+    <div className="alarms">
       {data.alarms.map(alarm => (
         <Alarm
           key={alarm.id}
@@ -24,7 +25,7 @@ function Alarms() {
           type={alarm.type}
         />
       ))}
-    </>
+    </div>
   );
 }
 

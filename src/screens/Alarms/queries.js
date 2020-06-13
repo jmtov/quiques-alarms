@@ -17,11 +17,14 @@ export default gql`
       },
       trigger_value,
       trigger_condition {
-        name
+        name,
+        display_name
       },
       type {
         id,
-        name
+        name,
+        description,
+        display_name
       }
     }
   }

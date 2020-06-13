@@ -1,0 +1,16 @@
+@keyframes pulse {
+  0% {
+    transform: none;
+    opacity: 0.8;
+  }
+  40% {
+    transform: scale(3);
+    opacity: 0;
+  }
+  60% {
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
