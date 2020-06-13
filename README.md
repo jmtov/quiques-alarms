@@ -1,6 +1,6 @@
 ## Quique's Alarms App
 
-This is a sample project to use React and Relay.
+This is a sample project to use React and Apollo.
 
 ### Running this project (Must complete)
 To run this project:
@@ -16,6 +16,6 @@ To run this build you can use serve.
 All the data in this project is read-only. You can send emails but they will only be stored until the next page refresh.
 
 ### About this project (Must complete)
-- This project was built with ❤️ using React and Relay.
+- This project was built with ❤️ using React and Apollo.
 
 #### Dependencies (Must complete)
