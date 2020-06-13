@@ -5,6 +5,56 @@
   display: grid;
   gap: 0.5rem;
   grid-auto-flow: row;
-  grid-template-columns: minmax(180px, 300px) minmax(180px, 220px) 1fr 1fr 2rem auto;
-  padding: 1rem;
+  grid-template-columns: 4fr 3fr 3fr 1fr 1fr 1fr 50px 4fr;
+  justify-content: flex-start;
+  padding: 0.25rem;
+  position: relative;
+
+  &__name {
+    font-weight: bold;
+    font-size: var(--fs-text--medium);
+    padding-left: 1rem;
+  }
+
+  &__actions {
+    position: sticky;
+    right: 0;
+  }
+}
+
+.action-button {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .alarm {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, auto);
+
+    &__name {
+      grid-column: 1 / 5;
+      padding-left: 0;
+    }
+
+    &__source {
+      grid-column: 1 / 5;
+    }
+
+    &__status {
+      grid-column: 1 / 5;
+      grid-row: 1 / 2;
+      justify-self: flex-start;
+      margin: 1rem 0.5rem 0.5rem 0.5rem;
+    }
+
+    &__actions {
+      grid-column: 1 / 5;
+    }
+  }
 }
