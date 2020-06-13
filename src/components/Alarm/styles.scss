@@ -6,5 +6,30 @@
   gap: 0.5rem;
   grid-auto-flow: row;
   grid-template-columns: minmax(180px, 300px) minmax(180px, 220px) 1fr 1fr 2rem auto;
-  padding: 1rem;
+  padding: 0.25rem;
+  position: relative;
+
+  &__name {
+    font-weight: bold;
+    font-size: var(--fs-text--medium);
+    padding-left: 1rem;
+  }
+
+  &__trigger {
+    border: none;
+    display: flex;
+    height: 100%;
+    padding: 0;
+    width: auto;
+  }
+}
+
+.action-button {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

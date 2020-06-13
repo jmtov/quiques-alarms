@@ -1,0 +1,24 @@
+.status {
+  justify-self: center;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  height: 0.75rem;
+  width: 0.75rem;
+
+  &--paused {
+    background-color: var(--status-warning);
+  }
+
+  &--on {
+    background-color: var(--status-error);
+  }
+
+  // Might be more appropriate this one
+  // &--off {
+  //   background-color: var(--status-ok);
+  // }
+
+  &--off {
+    background-color: var(--status-disabled);
+  }
+}

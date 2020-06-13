@@ -1,0 +1,23 @@
+.field {
+  height: 100%;
+
+  &--disabled,
+  &--read-only {
+    .field__input {
+      border-color: transparent;
+      outline: none;
+    }
+  }
+
+  &__input {
+    all: inherit;
+    appearance: none;
+    background-color: transparent;
+    border: thin solid var(--fg-color--translucent-200);
+    display: flex;
+    outline-width: 2px;
+    padding: 0.75rem;
+    transition: border 0.2s;
+    width: 100%;
+  }
+}
