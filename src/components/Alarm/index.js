@@ -7,19 +7,19 @@ import { useDeleteAlarm } from 'hooks/useDeleteAlarm';
 import ICONS from 'constants/icons';
 
 import Icon from 'components/Icon';
-import Field from 'components/Field';
 import StatusIndicator from 'components/StatusIndicator';
 
+import Form from './components/Form';
 import './styles.scss';
 
-
 // TODO: Might need to refactor this for a better UX
+//       Also check why the list is re-rendering due to "Hooks Changed".
 function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
-  const [toggleAlarm] = useToggleAlarmStatus(id, status, previous_status);
+  const [toggleAlarm] = useToggleAlarmStatus(id, status.id, previous_status?.id);
   // TODO: Would be better if user had a confirmation for this action.
   const [deleteAlarm] = useDeleteAlarm(id);
   const [isEditing, setIsEditing] = useState(false);
-  const [canEdit] = useState(false);
+  const [canEdit] = useState(true);
   const [canDelete] = useState(true);
   const [canChangeRunningState] = useState(true);
   const isPaused = status.id === ALARM_STATUS.PAUSED;
@@ -34,38 +34,18 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
 
   return (
     <div className="alarm">
-      <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
-        className="alarm__name"
-        value={name}
+      <Form
+        key={id}
+        id={id}
+        name={name}
+        isEditing={isEditing}
+        previous_status={previous_status}
+        source={source}
+        status={status}
+        trigger_condition={trigger_condition}
+        trigger_value={trigger_value}
+        type={type}
       />
-      <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
-        className="alarm__source"
-        value={source.name}
-      />
-      <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
-        className="alarm__trigger-type"
-        title={type.description}
-        value={type.display_name}
-      />
-      <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
-        className="alarm__trigger-condition"
-        value={trigger_condition.display_name}
-      />
-      <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
-        className="alarm__trigger-value"
-        value={trigger_value}
-      />
-      <span className="alarm__trigger-unit">%</span>
       <StatusIndicator className="alarm__status" status={status} />
       <div className="alarm__actions">
         {isEditing ? (
