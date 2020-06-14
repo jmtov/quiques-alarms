@@ -9,6 +9,7 @@ function Field({
   component: Component,
   disabled,
   hideLabel,
+  id,
   label,
   name,
   onBlur,
@@ -46,15 +47,17 @@ function Field({
   useEffect(() => {
     if (validate?.length) {
       const fieldErrors = validate.map(validation => validation(value)).filter(Boolean);
-      onError({ name, errors: fieldErrors.length ? fieldErrors : null });
+      if (onError) onError({ name, errors: fieldErrors.length ? fieldErrors : null });
       setErrors(fieldErrors);
     } else {
-      onError({ name, errors: null });
+      if (onError) onError({ name, errors: null });
     }
   }, [name, onError, value, validate]);
 
   useEffect(() => {
-    setValue(initialValue);
+    if (initialValue) {
+      setValue(initialValue);
+    }
   }, [initialValue]);
 
   return (
@@ -66,7 +69,7 @@ function Field({
       isFocused && 'field--focused',
       className
     )}>
-      {hideLabel && (
+      {!hideLabel && label && (
         <label
           className="field__label"
           htmlFor={name}>
@@ -76,6 +79,7 @@ function Field({
       <Component
         className="field__input"
         disabled={disabled}
+        id={id}
         name={name}
         onBlur={handleBlur}
         onChange={handleChange}
@@ -103,6 +107,7 @@ Field.propTypes = {
   component: oneOfType([element, func, string]),
   disabled: bool,
   hideLabel: bool,
+  id: oneOfType([number, string]),
   label: string,
   name: string,
   onBlur: func,

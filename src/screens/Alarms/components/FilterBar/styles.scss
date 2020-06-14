@@ -1,0 +1,53 @@
+.filter-bar {
+  align-items: flex-end;
+  border-bottom: thin solid var(--fg-color--translucent-200);
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding: 2rem;
+
+  &__field {
+    height: min-content;
+    margin-right: 0.5rem;
+    max-width: 18rem;
+  }
+
+  &__submit-button {
+    background: var(--fg-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    height: min-content;
+    font-size: 1.25rem;
+    padding: 0.7rem;
+
+    &::before {
+      background-color: none;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .filter-bar{
+    flex-wrap: nowrap;
+    padding: 1rem;
+
+    &__field {
+      max-width: unset;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .filter-bar{
+    flex-wrap: wrap;
+
+    &__field {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
