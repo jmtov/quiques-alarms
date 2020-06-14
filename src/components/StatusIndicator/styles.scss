@@ -1,22 +1,26 @@
 .status {
+  --size: 0.75rem;
   align-items: center;
-  border-radius: 0.75rem;
+  border-radius: var(--size);
   display: flex;
   justify-content: center;
   outline: none;
+  padding: 0 0.5rem;
   position: relative;
-  height: 0.75rem;
-  width: 0.75rem;
+  height: var(--size);
+  min-width: var(--size);
 
   &::before {
     all: inherit;
     content: '';
+    height: 100%;
     left: 0;
     margin: 0;
     padding: 0;
     pointer-events: none;
     position: absolute;
     top: 0;
+    width: 100%;
   }
 
   &__tooltip {
@@ -30,6 +34,15 @@
     transform: scale(0);
     transition: opacity 0.2s, transform 0.2s;
     white-space: nowrap;
+  }
+
+  &__label {
+    color: var(--bg-color);
+    display: flex;
+    font-size: var(--fs-text--small);
+    font-weight: bold;
+    justify-content: center;
+    pointer-events: none;
   }
 
   &--paused {

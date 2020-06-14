@@ -4,6 +4,7 @@
   border-bottom: thin solid var(--fg-color--translucent-200);
   display: flex;
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
   width: 100%;
 
@@ -28,19 +29,6 @@
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
-  }
-}
-
-.action-button {
-  appearance: none;
-  background-color: transparent;
-  cursor: pointer;
-
-  &__icon {
-    flex: 0 0;
-    font-size: 1.25rem;
-    margin: 0;
-    padding: 1rem;
   }
 }
 
