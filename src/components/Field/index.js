@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { bool, func, element, number, oneOfType, string } from 'prop-types';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import { arrayOf, bool, func, element, number, oneOfType, string } from 'prop-types';
 import { cn } from 'utils/style';
 
 import './styles.scss';
@@ -11,36 +11,61 @@ function Field({
   hideLabel,
   label,
   name,
-  onChange,
-  onFocus,
   onBlur,
+  onChange,
+  onError,
+  onFocus,
   placeholder,
   readOnly,
   tabIndex,
   title,
+  validate,
   value: initialValue,
   ...props
 }) {
   const [value, setValue] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const hasErrors = useMemo(() => errors?.some(Boolean), [errors]);
 
-  const handleChange = event => {
+  const handleChange = useCallback(event => {
     setValue(event.target.value);
-    if (onChange) onChange(event);
-  };
+    if (onChange) onChange({ name, value: event.target.value });
+  }, [name, onChange]);
 
-  const handleBlur = event => {
+  const handleBlur = useCallback(event => {
     setIsFocused(false);
     if (onBlur) onBlur(event);
-  };
+  }, [onBlur]);
 
-  const handleFocus = event => {
+  const handleFocus = useCallback(event => {
     setIsFocused(true);
     if (onFocus) onFocus(event);
-  };
+  }, [onFocus]);
+
+  useEffect(() => {
+    if (validate?.length) {
+      const fieldErrors = validate.map(validation => validation(value)).filter(Boolean);
+      onError({ name, errors: fieldErrors.length ? fieldErrors : null });
+      setErrors(fieldErrors);
+    } else {
+      onError({ name, errors: null });
+    }
+  }, [name, onError, value, validate]);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   return (
-    <div className={cn('field', disabled && 'field--disabled', readOnly && 'field--read-only', isFocused && 'field--focused', className)}>
+    <div className={cn(
+      'field',
+      disabled && 'field--disabled',
+      hasErrors && 'field--error',
+      readOnly && 'field--read-only',
+      isFocused && 'field--focused',
+      className
+    )}>
       {hideLabel && (
         <label
           className="field__label"
@@ -62,6 +87,9 @@ function Field({
         value={value}
         {...props}
       />
+      {hasErrors && (
+        <div className="field__errors">{errors.join(', ')}</div>
+      )}
     </div>
   );
 }
@@ -77,13 +105,15 @@ Field.propTypes = {
   hideLabel: bool,
   label: string,
   name: string,
-  onChange: func,
   onBlur: func,
+  onChange: func,
+  onError: func,
   onFocus: func,
   placeholder: string,
   readOnly: bool,
   tabIndex: number,
   title: string,
+  validate: arrayOf(func),
   value: oneOfType([number, string])
 };
 

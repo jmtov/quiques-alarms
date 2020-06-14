@@ -2,36 +2,58 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import StaticPropsContext from 'contexts/staticProps';
 import { alarmPropType } from 'propTypes/alarms';
+import { shallowCompare } from 'utils/helpers';
+import ICONS from 'constants/icons';
 
 import Field from 'components/Field';
-import Dropdown from 'components/Dropdown';
+import Icon from 'components/Icon';
 
+import { FIELDS } from './constants';
 import './styles.scss';
 
-function Form({ name: _name, source, trigger_condition, trigger_value, type, isEditing, onSubmit }) {
+function Form({ initialValues, isEditing, onReset, onSubmit }) {
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState(initialValues);
 
-  const [name, setName] = useState(_name);
-  const [sourceId, setSourceId] = useState(source.id);
-  const [alarmTypeId, setAlarmTypeId] = useState(type.id);
-  const [triggerConditionId, setTriggerConditionId] = useState(trigger_condition.id);
-  const [triggerValue, setTriggerValue] = useState(trigger_value);
-
-  const handleNameChange = useCallback((event) => setName(event.target.value), [setName]);
-  const handleSourceIdChange = useCallback((event) => setSourceId(event.target.value), [setSourceId]);
-  const handleAlarmTypeIdChange = useCallback((event) => setAlarmTypeId(event.target.value), [setAlarmTypeId]);
-  const handleTriggerConditionIdChange = useCallback((event) => setTriggerConditionId(event.target.value), [setTriggerConditionId]);
-  const handleTriggerValueChange = useCallback((event) => setTriggerValue(event.target.value), [setTriggerValue]);
-
-  const handleSubmit = () => {
-    const data = {
-      name,
-      sourceId,
-      triggerConditionId,
-      triggerValue,
-      alarmTypeId,
+  const commonFieldOptions = useMemo(() => {
+    return  {
+      tabIndex: isEditing ? 0 : -1,
+      readOnly: !isEditing,
+      disabled: !isEditing,
     };
+  }, [isEditing]);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const [hasChanged] = shallowCompare(values, initialValues);
+    const hasErrors = Object.values(errors).flatMap(Boolean).some(Boolean);
+
+    if (!hasErrors) {
+      if (hasChanged) {
+        onSubmit(values);
+      } else {
+        handleReset();
+      }
+    }
   };
+
+  const handleReset = () => {
+    setValues(initialValues);
+    onReset();
+  };
+
+  const handleFieldError = useCallback(({ name: fieldName, errors: fieldErrors }) => {
+    if (fieldName) {
+      setErrors(errors => ({ ...errors, [fieldName]: fieldErrors }));
+    }
+  }, []);
+
+  const handleFieldChange = useCallback(({ name: fieldName, value: fieldValue }) => {
+    if (fieldName) {
+      setValues(values => ({ ...values, [fieldName]: fieldValue }));
+    }
+  }, []);
 
   const mappedSources = useMemo(() => {
     if (sources && sources.length) {
@@ -58,53 +80,70 @@ function Form({ name: _name, source, trigger_condition, trigger_value, type, isE
   return (
     <form onSubmit={handleSubmit}>
       <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
         className="alarm__name"
-        value={_name}
-        onChange={handleNameChange}
-        name="alarm-name"
+        onChange={handleFieldChange}
+        onError={handleFieldError}
+        value={values[FIELDS.NAME.name]}
+        {...FIELDS.NAME}
+        {...commonFieldOptions}
       />
       <Field
-        disabled={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
         className="alarm__source"
-        value={sourceId}
-        onChange={handleSourceIdChange}
-        component={Dropdown}
+        onChange={handleFieldChange}
+        onError={handleFieldError}
         options={mappedSources}
-        name="alarm-source-id"
+        value={values[FIELDS.SOURCE_ID.name]}
+        {...FIELDS.SOURCE_ID}
+        {...commonFieldOptions}
       />
       <Field
-        disabled={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
         className="alarm__trigger-type"
-        title={type.description}
-        value={alarmTypeId}
-        onChange={handleAlarmTypeIdChange}
-        component={Dropdown}
+        onChange={handleFieldChange}
+        onError={handleFieldError}
         options={mappedAlarmTypes}
-        name="alarm-trigger-type-id"
+        value={values[FIELDS.TYPE_ID.name]}
+        {...FIELDS.TYPE_ID}
+        {...commonFieldOptions}
       />
       <Field
-        disabled={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
         className="alarm__trigger-condition"
-        value={triggerConditionId}
-        component={Dropdown}
-        onChange={handleTriggerConditionIdChange}
+        onChange={handleFieldChange}
+        onError={handleFieldError}
         options={mappedTriggerConditions}
-        name="alarm-trigger-condition-id"
+        value={values[FIELDS.TRIGGER_CONDITION_ID.name]}
+        {...FIELDS.TRIGGER_CONDITION_ID}
+        {...commonFieldOptions}
       />
       <Field
-        readOnly={!isEditing}
-        tabIndex={isEditing ? 0 : -1 }
         className="alarm__trigger-value"
-        value={triggerValue}
-        onChange={handleTriggerValueChange}
-        name="alarm-trigger-value"
+        onChange={handleFieldChange}
+        onError={handleFieldError}
+        validate={values[FIELDS.TRIGGER_VALUE.validate]}
+        value={values[FIELDS.TRIGGER_VALUE.name]}
+        {...FIELDS.TRIGGER_VALUE}
+        {...commonFieldOptions}
       />
       <span className="alarm__trigger-unit">%</span>
+      {isEditing && (
+        <div className="alarm__actions">
+          <button
+            className="action-button"
+            onClick={handleSubmit}
+            title="Save Changes"
+            type="submit"
+          >
+            <Icon name={ICONS.DONE} />
+          </button>
+          <button
+            className="action-button"
+            onClick={handleReset}
+            title="Cancel Changes"
+            type="reset"
+          >
+            <Icon name={ICONS.CLEAR} />
+          </button>
+        </div>
+      )}
     </form>
   );
 }

@@ -16,13 +16,17 @@ export const useDeleteAlarm = id => {
   const [error, setError] = useState(null);
   const [_deleteAlarm, { data, error: _error, loading }] = useMutation(DELETE_ALARM_MUTATION);
 
+  const updateCache = useCallback((cache => {
+    updateAlarmsQueryCache(cache, id);
+  }, []));
+
   const deleteAlarm = useCallback(() => {
     if (!id) setError('No id provided.');
     _deleteAlarm({
       variables: { id },
-      update: cache => updateAlarmsQueryCache(cache, id)
+      update: updateCache
     });
-  }, [id, _deleteAlarm]);
+  }, [id, _deleteAlarm, updateCache]);
 
   return [deleteAlarm, { data, error: error ? error : _error, loading }];
 };
