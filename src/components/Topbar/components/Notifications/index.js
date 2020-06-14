@@ -13,6 +13,7 @@ const namespace = 'notification-button';
 
 function Notifications() {
   const { data, error } = useSubscription(ALARM_SUBSCRIPTION_QUERY);
+  // TODO: Get this data from API
   const status = useMemo(() => data?.alarms ? { name: 'on', label: data.alarms.lenfgth } : null, [data]);
 
   if (error) {
@@ -21,7 +22,7 @@ function Notifications() {
 
   return (
     <button className={styles[namespace]}>
-      {status && <StatusIndicator className={styles[`${namespace}__bg`]} status={status} label={data.alarms.length} />}
+      {status && !!data.alarms.length && <StatusIndicator className={styles[`${namespace}__bg`]} status={status} label={data.alarms.length} />}
       <Icon className={styles[`${namespace}__icon`]} name={ICONS.ERROR_OUTLINE} />
     </button>
   );
