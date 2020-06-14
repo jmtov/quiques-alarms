@@ -40,7 +40,7 @@ export const useToggleAlarmStatus = (id, status, previous_status) => {
       });
       setIsPaused(true);
     }
-  }, [isPaused, id, status.id, previous_status?.id,toggleAlarmStatus]);
+  }, [isPaused, id, status.id, previous_status, toggleAlarmStatus]);
 
   return [toggleAlarm, { data, error }];
 };

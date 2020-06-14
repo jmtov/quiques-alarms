@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { alarmPropType } from 'propTypes/alarms';
 import { ALARM_STATUS } from 'constants/alarms';
 import { useToggleAlarmStatus } from 'hooks/useToggleAlarmStatus';
+import { useDeleteAlarm } from 'hooks/useDeleteAlarm';
 import ICONS from 'constants/icons';
 
 import Icon from 'components/Icon';
@@ -15,9 +16,11 @@ import './styles.scss';
 // TODO: Might need to refactor this for a better UX
 function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
   const [toggleAlarm] = useToggleAlarmStatus(id, status, previous_status);
+  // TODO: Would be better if user had a confirmation for this action.
+  const [deleteAlarm] = useDeleteAlarm(id);
   const [isEditing, setIsEditing] = useState(false);
   const [canEdit] = useState(false);
-  const [canDelete] = useState(false);
+  const [canDelete] = useState(true);
   const [canChangeRunningState] = useState(true);
   const isPaused = status.id === ALARM_STATUS.PAUSED;
 
@@ -25,16 +28,8 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
     setIsEditing(true);
   };
 
-  const handleDelete = () => {
-    console.log(id);
-  };
-
   const handleDone = () => {
     setIsEditing(false);
-  };
-
-  const togglePausedState = () => {
-    toggleAlarm();
   };
 
   return (
@@ -96,7 +91,7 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
         <button
           className="action-button"
           disabled={!canDelete}
-          onClick={handleDelete}
+          onClick={deleteAlarm}
           title="Delete alarm"
         >
           <Icon name={ICONS.DELETE} />
@@ -104,7 +99,7 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
         <button
           className="action-button"
           disabled={!canChangeRunningState}
-          onClick={togglePausedState}
+          onClick={toggleAlarm}
           title={isPaused ? 'Resume alarm' : 'Pause alarm'}
         >
           <Icon name={isPaused ? ICONS.PLAY_ARROW : ICONS.PAUSE} />

@@ -57,3 +57,11 @@ export const SET_ALARM_STATE_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_ALARM_MUTATION = gql`
+  mutation deleteAlarm ($id: Int!) {
+    delete_alarms(where: { id: { _eq: $id }}) {
+      affected_rows
+    }
+  }
+`;
