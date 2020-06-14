@@ -6,6 +6,7 @@ export default {
   ADD: 'icon-add',
   CLEAR: 'icon-clear',
   CREATE: 'icon-create',
+  DONE: 'icon-done',
   REMOVE: 'icon-remove',
   KEYBOARD_ARROW_DOWN: 'icon-keyboard_arrow_down',
   NOTIFICATIONS: 'icon-notifications',

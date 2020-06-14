@@ -1,20 +1,41 @@
 import React, { useState } from 'react';
 
 import { alarmPropType } from 'propTypes/alarms';
+import { ALARM_STATUS } from 'constants/alarms';
+import { useToggleAlarmStatus } from 'hooks/useToggleAlarmStatus';
 import ICONS from 'constants/icons';
 
 import Icon from 'components/Icon';
+import Field from 'components/Field';
 import StatusIndicator from 'components/StatusIndicator';
 
 import './styles.scss';
-import Field from 'components/Field';
+
 
 // TODO: Might need to refactor this for a better UX
-function Alarm({ name, source, status, trigger_condition, trigger_value, type }) {
-  const [isEditing] = useState(false);
+function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
+  const [toggleAlarm] = useToggleAlarmStatus(id, status, previous_status);
+  const [isEditing, setIsEditing] = useState(false);
   const [canEdit] = useState(false);
   const [canDelete] = useState(false);
-  const [canPause] = useState(false);
+  const [canChangeRunningState] = useState(true);
+  const isPaused = status.id === ALARM_STATUS.PAUSED;
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleDelete = () => {
+    console.log(id);
+  };
+
+  const handleDone = () => {
+    setIsEditing(false);
+  };
+
+  const togglePausedState = () => {
+    toggleAlarm();
+  };
 
   return (
     <div className="alarm">
@@ -52,9 +73,42 @@ function Alarm({ name, source, status, trigger_condition, trigger_value, type })
       <span className="alarm__trigger-unit">%</span>
       <StatusIndicator className="alarm__status" status={status} />
       <div className="alarm__actions">
-        <button disabled={!canEdit} title="Edit alarm" className="action-button"><Icon name={ICONS.CREATE} /></button>
-        <button disabled={!canDelete} title="Delete alarm" className="action-button"><Icon name={ICONS.DELETE} /></button>
-        <button disabled={!canPause} title="Pause alarm" className="action-button"><Icon name={ICONS.PAUSE} /></button>
+        {isEditing ? (
+          <button
+            className="action-button"
+            disabled={!canEdit}
+            onClick={handleDone}
+            title="Edit alarm"
+          >
+            <Icon name={ICONS.DONE} />
+          </button>
+        ) : (
+          <button
+            className="action-button"
+            disabled={!canEdit}
+            onClick={handleEdit}
+            title="Edit alarm"
+          >
+            <Icon name={ICONS.CREATE} />
+          </button>
+        )
+        }
+        <button
+          className="action-button"
+          disabled={!canDelete}
+          onClick={handleDelete}
+          title="Delete alarm"
+        >
+          <Icon name={ICONS.DELETE} />
+        </button>
+        <button
+          className="action-button"
+          disabled={!canChangeRunningState}
+          onClick={togglePausedState}
+          title={isPaused ? 'Resume alarm' : 'Pause alarm'}
+        >
+          <Icon name={isPaused ? ICONS.PLAY_ARROW : ICONS.PAUSE} />
+        </button>
       </div>
     </div>
   );
