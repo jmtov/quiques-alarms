@@ -11,7 +11,7 @@ import Icon from 'components/Icon';
 import { FIELDS } from './constants';
 import './styles.scss';
 
-function Form({ initialValues, isEditing, onReset, onSubmit }) {
+function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialValues);
@@ -80,6 +80,7 @@ function Form({ initialValues, isEditing, onReset, onSubmit }) {
   return (
     <form onSubmit={handleSubmit}>
       <Field
+        id={`${id}-${FIELDS.NAME.name}`}
         className="alarm__name"
         onChange={handleFieldChange}
         onError={handleFieldError}
@@ -88,6 +89,7 @@ function Form({ initialValues, isEditing, onReset, onSubmit }) {
         {...commonFieldOptions}
       />
       <Field
+        id={`${id}-${FIELDS.SOURCE_ID.name}`}
         className="alarm__source"
         onChange={handleFieldChange}
         onError={handleFieldError}
@@ -97,6 +99,7 @@ function Form({ initialValues, isEditing, onReset, onSubmit }) {
         {...commonFieldOptions}
       />
       <Field
+        id={`${id}-${FIELDS.TYPE_ID.name}`}
         className="alarm__trigger-type"
         onChange={handleFieldChange}
         onError={handleFieldError}
@@ -106,6 +109,7 @@ function Form({ initialValues, isEditing, onReset, onSubmit }) {
         {...commonFieldOptions}
       />
       <Field
+        id={`${id}-${FIELDS.TRIGGER_CONDITION_ID.name}`}
         className="alarm__trigger-condition"
         onChange={handleFieldChange}
         onError={handleFieldError}
@@ -115,6 +119,7 @@ function Form({ initialValues, isEditing, onReset, onSubmit }) {
         {...commonFieldOptions}
       />
       <Field
+        id={`${id}-${FIELDS.TRIGGER_VALUE.name}`}
         className="alarm__trigger-value"
         onChange={handleFieldChange}
         onError={handleFieldError}
