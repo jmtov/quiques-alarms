@@ -19,13 +19,13 @@ const randomizeAlarmsStates = alarms => {
 };
 
 export const useShuffleAlarms = () => {
-  const { data } = useQuery(GET_ALARMS_QUERY);
-  const [updateAlarm, { error, loading }] = useMutation(SET_ALARM_STATE_MUTATION);
+  const { data, loading: alarmsLoading } = useQuery(GET_ALARMS_QUERY);
+  const [updateAlarm, { error, loading:  mutationLoading }] = useMutation(SET_ALARM_STATE_MUTATION);
 
   const shuffleAlarmsState = useCallback(() => {
     const newStates = randomizeAlarmsStates(data?.alarms);
 
-    // NOTE: Should be a bulk operation but since it's for testing purposes: ¯\_(ツ)_/¯
+    // NOTE: Should be a bulk operation but since it's for testing purposes: ¯\_(ツ)_/¯  - Using apollo-link-batch-http
     Object.values(newStates).forEach(alarm => {
       updateAlarm({
         variables: { ...alarm }
@@ -33,5 +33,5 @@ export const useShuffleAlarms = () => {
     });
   }, [updateAlarm, data]);
 
-  return [shuffleAlarmsState, { error, loading }];
+  return [shuffleAlarmsState, { error, loading: alarmsLoading && mutationLoading }];
 };
