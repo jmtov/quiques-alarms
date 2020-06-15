@@ -27,6 +27,7 @@ function Field({
   const [value, setValue] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const [errors, setErrors] = useState(null);
+  const [touched, setTouched] = useState(false);
   const hasErrors = useMemo(() => errors?.some(Boolean), [errors]);
 
   const handleChange = useCallback(event => {
@@ -36,6 +37,7 @@ function Field({
 
   const handleBlur = useCallback(event => {
     setIsFocused(false);
+    if (!touched) setTouched(true);
     if (onBlur) onBlur(event);
   }, [onBlur]);
 
@@ -64,7 +66,7 @@ function Field({
     <div className={cn(
       'field',
       disabled && 'field--disabled',
-      hasErrors && 'field--error',
+      hasErrors && touched && 'field--error',
       readOnly && 'field--read-only',
       isFocused && 'field--focused',
       className
@@ -91,7 +93,7 @@ function Field({
         value={value}
         {...props}
       />
-      {hasErrors && (
+      {hasErrors && touched && (
         <div className="field__errors">{errors.join(', ')}</div>
       )}
     </div>
