@@ -20,8 +20,8 @@ function updateAlarmsQueryCache(cache, updatedAlarmData) {
   });
 }
 
-export const useToggleAlarmStatus = (id, statusId, previousStatusId) => {
-  const [isPaused, setIsPaused] = useState(statusId === ALARM_STATUS.PAUSED);
+export const useToggleAlarmStatus = (id, status_id, previous_status_id) => {
+  const [isPaused, setIsPaused] = useState(status_id === ALARM_STATUS.PAUSED);
   const [error, setError] = useState(null);
   const [toggleAlarmStatus, { data }] = useMutation(SET_ALARM_STATE_MUTATION);
 
@@ -29,18 +29,18 @@ export const useToggleAlarmStatus = (id, statusId, previousStatusId) => {
     if (!id) setError('No id provided.');
     if (isPaused) {
       toggleAlarmStatus({
-        variables: { id, newStatusId: previousStatusId },
+        variables: { id, status_id: previous_status_id, previous_status_id: 0 },
         update: updateAlarmsQueryCache
       });
       setIsPaused(false);
     } else {
       toggleAlarmStatus({
-        variables: { id, newStatusId: 2, oldStatusId: statusId },
+        variables: { id, status_id: 2, previous_status_id: status_id },
         update: updateAlarmsQueryCache
       });
       setIsPaused(true);
     }
-  }, [isPaused, id, statusId, previousStatusId, toggleAlarmStatus]);
+  }, [isPaused, id, status_id, previous_status_id, toggleAlarmStatus]);
 
   return [toggleAlarm, { data, error }];
 };

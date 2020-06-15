@@ -1,3 +1,7 @@
+export const getRandomInt = max => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
 export const shallowCompare = (obj1, obj2) => {
   const differences = [];
 

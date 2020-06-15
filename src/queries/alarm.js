@@ -34,13 +34,14 @@ export const ALARM_FRAGMENT = gql`
   }
 `;
 
-// TODO: Normalize all.
 export const GET_ALARMS_QUERY = gql`
 query AlarmQuery (
   $name_filter: String,
   $status_filter: Int
 ) {
-  alarms {
+  alarms (
+    order_by: { name: asc }
+  ) {
 
   # TODO: QUERIES: Check how to structure the query data for filters to avoid queries being discarded.
   # } (
@@ -53,10 +54,10 @@ ${ALARM_FRAGMENT}
 `;
 
 export const SET_ALARM_STATE_MUTATION = gql`
-  mutation toggleAlarmPausedStatus ($oldStatusId: Int, $newStatusId: Int!, $id: Int!) {
+  mutation toggleAlarmPausedStatus ($previous_status_id: Int!, $status_id: Int!, $id: Int!) {
     update_alarms(
-      where: {id: {_eq: $id}},
-      _set: {status_id: $newStatusId, previous_status_id: $oldStatusId}
+      where: { id: { _eq: $id } },
+      _set: { status_id: $status_id, previous_status_id: $previous_status_id }
     ) {
       returning {
         id,
@@ -75,8 +76,9 @@ export const SET_ALARM_STATE_MUTATION = gql`
   }
 `;
 
+
 export const UPDATE_ALARM_MUTATION = gql`
-  mutation toggleAlarmPausedStatus (
+  mutation updateAlarm (
     $id: Int!,
     $name: String!,
     $source_id: Int!,
@@ -85,7 +87,7 @@ export const UPDATE_ALARM_MUTATION = gql`
     $type_id: Int!
   ) {
     update_alarms(
-      where: {id: {_eq: $id}},
+      where: { id: {_eq: $id} },
       _set: {
         name: $name
         previous_status_id: 0
