@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/react-hooks';
 import { GET_ALARMS_QUERY, ADD_ALARM_MUTATION } from 'queries/alarm';
 
 function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
-  console.log(updatedAlarmData);
   const newAlarmData = updatedAlarmData?.data?.insert_alarms?.returning?.[0];
   const existingAlarms = cache.readQuery({ query: GET_ALARMS_QUERY, variables: filters });
 
