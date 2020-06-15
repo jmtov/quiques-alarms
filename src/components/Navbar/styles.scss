@@ -4,11 +4,11 @@
   border-right: thin solid var(--fg-color--translucent-200);
   display: flex;
   flex-direction: column;
-  left: 0;
-  max-height: 100%;
+  // left: 0;
+  max-height: calc(100vh - 5rem);
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  top: 5rem;
 
   &__logo {
     height: 3rem;

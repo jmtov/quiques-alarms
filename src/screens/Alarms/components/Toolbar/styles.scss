@@ -1,15 +1,15 @@
 .toolbar {
   display: flex;
-  padding: 0.5rem 2rem;
   overflow: hidden;
   pointer-events: none;
   width: 100%;
+  z-index: var(--z-toolbar);
 
   &__form {
     background-color: var(--bg-color);
     border-top: thin solid var(--fg-color--translucent-200);
     max-width: 100%;
-    padding: 1.75rem 0;
+    padding: 2rem 2rem 2.75rem;
     pointer-events: initial;
     transition: transform 0.2s;
 

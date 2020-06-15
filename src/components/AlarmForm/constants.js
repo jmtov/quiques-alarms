@@ -28,7 +28,7 @@ export const FIELDS = {
   },
   TRIGGER_CONDITION_ID: {
     name: 'trigger_condition_id',
-    label: 'Condition',
+    label: 'Trigger',
     component: Dropdown,
     validate: [notEmpty],
   },
