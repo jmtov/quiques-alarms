@@ -30,7 +30,6 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
     const [hasChanged] = shallowCompare(values, initialValues);
     const hasErrors = Object.values(errors).flatMap(Boolean).some(Boolean);
 
-    console.log(errors);
     if (!hasErrors) {
       if (hasChanged) {
         onSubmit(values);

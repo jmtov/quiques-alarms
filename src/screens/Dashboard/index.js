@@ -1,8 +1,13 @@
 import React from 'react';
+import SummaryCard from 'components/SummaryCard';
+
+import './styles.scss';
 
 function Dashboard() {
   return (
-    <h1>Dashboard Screen</h1>
+    <div className="dashboard-screen">
+      <SummaryCard />
+    </div>
   );
 }
 

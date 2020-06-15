@@ -1,0 +1,15 @@
+.dashboard-screen {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;;
+}
+
+@media screen and (max-width: 700px) {
+  .alarms-screen {
+    &__toolbar {
+      bottom: 3.25rem;
+    }
+  }
+}
