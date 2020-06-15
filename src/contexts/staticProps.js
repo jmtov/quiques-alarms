@@ -9,7 +9,6 @@ import { GET_TRIGGER_CONDITIONS_QUERY } from 'queries/triggerConditions';
 
 const StaticPropsContext = React.createContext();
 
-// TODO: Write this better
 export const StaticPropsContextProvider = ({ children }) => {
   const sources = useQuery(GET_SOURCES_QUERY);
   const alarmTypes = useQuery(GET_ALARM_TYPES_QUERY);

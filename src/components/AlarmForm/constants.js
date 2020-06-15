@@ -2,7 +2,7 @@ import Dropdown from 'components/Dropdown';
 
 const isValidNameRegExp = /^[\w0-9]*$/;
 
-const notEmpty = value => value ? undefined : 'Cannot be empty!';
+const notEmpty = value => value === 0 || value ? undefined : 'Cannot be empty!';
 
 const nameValidations = [
   notEmpty,

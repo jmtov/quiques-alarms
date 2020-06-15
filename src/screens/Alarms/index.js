@@ -1,22 +1,25 @@
 import React, { useCallback, useState } from 'react';
 
+import { normalizeFilters } from 'utils/transforms';
+
 import AlarmsList from './components/AlarmsList';
 import FilterBar from './components/FilterBar';
 import Toolbar from './components/Toolbar';
 import './styles.scss';
 
+
 function Alarms() {
-  const [filter, setFilters] = useState({});
+  const [filters, setFilters] = useState(normalizeFilters({}));
 
   const handleFilterChange = useCallback(newFilters => {
-    setFilters(newFilters);
+    setFilters(normalizeFilters(newFilters));
   }, []);
 
   return (
     <div className="alarms-screen">
-      <FilterBar onFilterChange={handleFilterChange} />
-      <AlarmsList nameFilter={filter.nameFilter} statusFilter={filter.statusFilter} />
-      <Toolbar className="alarms-screen__toolbar" />
+      <FilterBar filters={filters} onFilterChange={handleFilterChange} />
+      <AlarmsList filters={filters} />
+      <Toolbar filters={filters} className="alarms-screen__toolbar" />
     </div>
   );
 }

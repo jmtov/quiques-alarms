@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState, useCallback } from 'react';
-import { func } from 'prop-types';
+import { func, number, shape, string } from 'prop-types';
 
 import StaticPropsContext from 'contexts/staticProps';
 import ICONS from 'constants/icons';
@@ -7,18 +7,16 @@ import ICONS from 'constants/icons';
 import Field from 'components/Field';
 import Icon from 'components/Icon';
 
-import './styles.scss';
 import { FIELDS } from './constants';
+import './styles.scss';
 
-const defaultState = {
-  [FIELDS.NAME_FILTER.name]: '',
-  [FIELDS.STATUS_FILTER.name]: '',
-};
-
-function FilterBar({ onFilterChange }) {
+function FilterBar({ onFilterChange, filters }) {
   const { alarmStatuses } = useContext(StaticPropsContext);
   const [, setErrors] = useState(null);
-  const [values, setValues] = useState(defaultState);
+  const [values, setValues] = useState({
+    [FIELDS.NAME_FILTER.name]: filters[FIELDS.NAME_FILTER.name] || '',
+    [FIELDS.STATUS_FILTER.name]: filters[FIELDS.STATUS_FILTER.name]
+  });
 
   const mappedStatuses = useMemo(() => {
     if (alarmStatuses?.length) {
@@ -80,6 +78,10 @@ function FilterBar({ onFilterChange }) {
 
 FilterBar.propTypes = {
   onFilterChange: func,
+  filters: shape({
+    name_filter: string,
+    status_filter: number,
+  })
 };
 
 export default FilterBar;

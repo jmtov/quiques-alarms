@@ -1,18 +1,20 @@
 import React, { useCallback, useState } from 'react';
-import { string } from 'prop-types';
+import { number, shape, string } from 'prop-types';
 
-import ICONS from 'constants/icons';
 import { cn } from 'utils/style';
+import ICONS from 'constants/icons';
+import { useAddAlarm } from 'hooks/useAddAlarm';
 
 import Icon from 'components/Icon';
 import AlarmForm from 'components/AlarmForm';
 
 import './styles.scss';
 
-function Toolbar({ className }) {
+function Toolbar({ className, filters }) {
+  const [addAlarm] = useAddAlarm();
   const [isAdding, setIsAdding] = useState(false);
 
-  const addAlarm = () => {
+  const handleAdd = () => {
     setIsAdding(true);
   };
 
@@ -20,9 +22,11 @@ function Toolbar({ className }) {
     setIsAdding(false);
   }, []);
 
-  const handleDone = useCallback(() => {
+  // TODO: Might need to check values before sending.
+  const handleDone = useCallback(values => {
+    addAlarm(values, filters);
     setIsAdding(false);
-  }, []);
+  }, [addAlarm, filters]);
 
   return (
     <div className={cn('toolbar', className)}>
@@ -34,7 +38,7 @@ function Toolbar({ className }) {
       />
       <button
         className={cn('add-button', isAdding && 'add-button--hidden')}
-        onClick={addAlarm}
+        onClick={handleAdd}
         title="Add Alarm"
       >
         <Icon className="add-button__icon" name={ICONS.ADD} />
@@ -45,7 +49,11 @@ function Toolbar({ className }) {
 }
 
 Toolbar.propTypes = {
-  className: string
+  className: string,
+  filters: shape({
+    name_filter: string,
+    status_filter: number,
+  })
 };
 
 export default Toolbar;

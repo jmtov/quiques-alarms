@@ -5,7 +5,6 @@ import { ALARM_STATUS } from 'constants/alarms';
 import { useToggleAlarmStatus } from 'hooks/useToggleAlarmStatus';
 import { useDeleteAlarm } from 'hooks/useDeleteAlarm';
 import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
-import { shallowCompare } from 'utils/helpers';
 import ICONS from 'constants/icons';
 
 import AlarmForm from 'components/AlarmForm';
@@ -17,11 +16,11 @@ import './styles.scss';
 
 // TODO: Might need to refactor this for a better UX
 //       Also check why the list is re-rendering due to "Hooks Changed".
-function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
+function Alarm({ id, currentFilters, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
   const [toggleAlarm] = useToggleAlarmStatus(id, status.id, previous_status?.id);
   // TODO: Would be better if user had a confirmation for this action.
-  const [deleteAlarm] = useDeleteAlarm(id);
-  const [updateAlarm] = useUpdateAlarm(id);
+  const [deleteAlarm] = useDeleteAlarm(id, currentFilters);
+  const [updateAlarm] = useUpdateAlarm(id, currentFilters);
   const [isEditing, setIsEditing] = useState(false);
 
   const initialFormValues = useMemo(() => {
@@ -45,12 +44,9 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
   }, []);
 
   const handleDone = useCallback((newValues) => {
-    const [hasChanged] = shallowCompare(newValues, initialFormValues);
-    if (hasChanged) {
-      updateAlarm(newValues);
-    }
+    updateAlarm(newValues);
     setIsEditing(false);
-  }, [initialFormValues, updateAlarm]);
+  }, [updateAlarm]);
 
   return (
     <div className="alarm">
