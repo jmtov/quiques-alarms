@@ -11,3 +11,14 @@
   --status-error: #ff0044;
   --status-ok: #11e867;
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg-color: #aaaaaa;
+    --fg-color--translucent-100: #aaaaaa99;
+    --fg-color--translucent-200: #aaaaaaaa;
+    --bg-color: #111111;
+    --bg-color--translucent-100: #11111122;
+    --bg-color--translucent-200: #11111144;
+  }
+}

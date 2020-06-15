@@ -3,7 +3,7 @@
   display: grid;
   gap: 0.5rem;
   grid-auto-flow: row;
-  grid-template-columns: 4fr 3fr 3fr 2fr 1fr auto 1fr;
+  grid-template-columns: 4fr 3fr 3fr 2fr 1fr auto auto;
   justify-content: flex-start;
   position: relative;
 
