@@ -14,4 +14,5 @@ export default {
   NOTIFICATIONS_ACTIVE: 'icon-notifications_active',
   DELETE: 'icon-delete',
   SEARCH: 'icon-search',
+  SHUFFLE: 'icon-shuffle',
 };
