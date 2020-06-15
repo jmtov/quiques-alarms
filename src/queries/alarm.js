@@ -1,42 +1,55 @@
 import { gql } from 'apollo-boost';
 
-export const GET_ALARMS_QUERY = gql`
-  query AlarmQuery (
-    $name_filter: String,
-    $status_filter: Int
-  ) {
-    alarms(where: { name: {_ilike: $name_filter }, status_id: { _eq: $status_filter }},) {
+export const ALARM_FRAGMENT = gql`
+  fragment alarm on alarms {
+    id,
+    name,
+    previous_status {
+      id,
+      description,
+      name
+    },
+    status {
+      id,
+      description,
+      name
+    },
+    source {
       id,
       name,
-      previous_status {
-        id,
-        description,
-        name
-      },
-      status {
-        id,
-        description,
-        name
-      },
-      source {
-        id,
-        name,
-        ip_address
-      },
-      trigger_value,
-      trigger_condition {
-        id,
-        name,
-        display_name
-      },
-      type {
-        id,
-        name,
-        description,
-        display_name
-      }
+      ip_address
+    },
+    trigger_value,
+    trigger_condition {
+      id,
+      name,
+      display_name
+    },
+    type {
+      id,
+      name,
+      description,
+      display_name
     }
   }
+`;
+
+// TODO: Normalize all.
+export const GET_ALARMS_QUERY = gql`
+query AlarmQuery (
+  $name_filter: String,
+  $status_filter: Int
+) {
+  alarms {
+
+  # TODO: QUERIES: Check how to structure the query data for filters to avoid queries being discarded.
+  # } (
+  #   where: { name: { _ilike: $name_filter }, status_id: { _eq: $status_filter }}
+  # ) {
+    ...alarm
+  }
+}
+${ALARM_FRAGMENT}
 `;
 
 export const SET_ALARM_STATE_MUTATION = gql`
@@ -84,38 +97,11 @@ export const UPDATE_ALARM_MUTATION = gql`
       }
     ) {
       returning {
-        id,
-        name,
-        previous_status {
-          id,
-          description,
-          name
-        },
-        status {
-          id,
-          description,
-          name
-        },
-        source {
-          id,
-          name,
-          ip_address
-        },
-        trigger_value,
-        trigger_condition {
-          id,
-          name,
-          display_name
-        },
-        type {
-          id,
-          name,
-          description,
-          display_name
-        }
+        ...alarm
       }
     }
   }
+${ALARM_FRAGMENT}
 `;
 
 export const DELETE_ALARM_MUTATION = gql`
@@ -124,4 +110,29 @@ export const DELETE_ALARM_MUTATION = gql`
       affected_rows
     }
   }
+`;
+
+export const ADD_ALARM_MUTATION = gql`
+  mutation AddAlarm (
+    $name: String!
+    $source_id: Int!
+    $trigger_condition_id: Int!
+    $trigger_value: Int!
+    $type_id: Int!
+  ) {
+    insert_alarms(objects: [
+      {
+        name: $name,
+        source_id: $source_id,
+        trigger_condition_id: $trigger_condition_id,
+        trigger_value: $trigger_value,
+        type_id: $type_id
+      }
+    ]) {
+      returning {
+        ...alarm
+      }
+    }
+  }
+${ALARM_FRAGMENT}
 `;

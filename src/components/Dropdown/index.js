@@ -11,7 +11,7 @@ function Dropdown({ className, disabled, id, multiple, name, options, onBlur, on
     <>
       <select
         className={`${className} select`}
-        defaultValue={value || null}
+        defaultValue={Number.isNaN(value) ? null : value}
         disabled={disabled}
         id={id}
         multiple={multiple}
@@ -24,7 +24,6 @@ function Dropdown({ className, disabled, id, multiple, name, options, onBlur, on
           <option
             key={option.id}
             value={option.id}
-            // disabled={!Number.isFinite(option.id)}
           >
             {option.displayName}
           </option>

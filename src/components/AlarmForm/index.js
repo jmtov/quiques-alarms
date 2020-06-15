@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import StaticPropsContext from 'contexts/staticProps';
 import { alarmPropType } from 'propTypes/alarms';
 import { shallowCompare } from 'utils/helpers';
+import { cn } from 'utils/style';
 import ICONS from 'constants/icons';
 
 import Field from 'components/Field';
@@ -10,7 +11,6 @@ import Icon from 'components/Icon';
 
 import { FIELDS } from './constants';
 import './styles.scss';
-import { cn } from 'utils/style';
 
 function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit }) {
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
@@ -30,6 +30,7 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
     const [hasChanged] = shallowCompare(values, initialValues);
     const hasErrors = Object.values(errors).flatMap(Boolean).some(Boolean);
 
+    console.log(errors);
     if (!hasErrors) {
       if (hasChanged) {
         onSubmit(values);
@@ -157,7 +158,13 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
 }
 
 AlarmForm.defaultProps = {
-  initialValues: {}
+  initialValues: {
+    [FIELDS.NAME.name]: '',
+    [FIELDS.SOURCE_ID.name]: null,
+    [FIELDS.TYPE_ID.name]: null,
+    [FIELDS.TRIGGER_CONDITION_ID.name]: null,
+    [FIELDS.TRIGGER_VALUE.name]: '',
+  }
 };
 
 AlarmForm.propTypes = alarmPropType;

@@ -39,7 +39,7 @@ function Field({
     setIsFocused(false);
     if (!touched) setTouched(true);
     if (onBlur) onBlur(event);
-  }, [onBlur]);
+  }, [onBlur, touched]);
 
   const handleFocus = useCallback(event => {
     setIsFocused(true);

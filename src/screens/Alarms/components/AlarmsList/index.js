@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, string } from 'prop-types';
+import { number, shape, string } from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ALARMS_QUERY } from 'queries/alarm';
@@ -10,13 +10,11 @@ import Errored from 'components/Errored';
 
 import './styles.scss';
 
-function AlarmsList({ nameFilter, statusFilter }) {
+function AlarmsList({ filters }) {
   const { loading, error, data } = useQuery(
     GET_ALARMS_QUERY,
-    { variables: {
-      name_filter: nameFilter ? `%${nameFilter}%` : null,
-      status_filter: statusFilter
-    }}
+    // TODO: QUERIES: Check how to structure the query data for filters to avoid queries being discarded.
+    // { variables: filters }
   );
 
   if (loading) return <Loading />;
@@ -36,6 +34,7 @@ function AlarmsList({ nameFilter, statusFilter }) {
           trigger_condition={alarm.trigger_condition}
           trigger_value={alarm.trigger_value}
           type={alarm.type}
+          currentFilters={filters}
         />
       ))}
     </div>
@@ -43,8 +42,10 @@ function AlarmsList({ nameFilter, statusFilter }) {
 }
 
 AlarmsList.propTypes = {
-  nameFilter: string,
-  statusFilter: number
+  filters: shape({
+    nameFilter: string,
+    statusFilter: number
+  })
 };
 
 export default AlarmsList;
