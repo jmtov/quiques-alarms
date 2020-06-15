@@ -1,6 +1,6 @@
 import { split } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { BatchHttpLink } from 'apollo-link-batch-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloClient } from 'apollo-client';
@@ -8,8 +8,9 @@ import { ApolloClient } from 'apollo-client';
 const apiURL = process.env.REACT_APP_API_ENDPOINT;
 const apiWSURL = process.env.REACT_APP_API_WS_ENDPOINT;
 
-const httpLink = new HttpLink({
+const httpLink = new BatchHttpLink({
   uri: apiURL,
+  batchInterval: 30
 });
 
 const wsLink = new WebSocketLink({

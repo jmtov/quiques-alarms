@@ -10,14 +10,17 @@ import styles from './styles.module.scss';
 const namespace = 'shuffle-button';
 
 function ShuffleAlarmsStateButton() {
-  const [shuffleAlarms] = useShuffleAlarms();
+  const [shuffleAlarms, { loading }] = useShuffleAlarms();
+  console.log(loading);
 
   const handleClick = () => {
-    shuffleAlarms();
+    if (!loading) {
+      shuffleAlarms();
+    }
   };
 
   return (
-    <button className={styles[namespace]} onClick={handleClick}>
+    <button className={styles[namespace]} onClick={handleClick} disabled={loading}>
       <Icon className={styles[`${namespace}__icon`]} name={ICONS.SHUFFLE} />
     </button>
   );
