@@ -5,9 +5,11 @@ import { iconPropType } from 'propTypes/icon';
 
 import styles from './styles.module.scss';
 
+const namespace = 'icon';
+
 function Icon({ className, name }) {
   return (
-    <span className={cn(styles.icon, name, className)} aria-hidden={true} />
+    <span className={cn(styles[namespace], name, className)} aria-hidden={true} />
   );
 }
 
