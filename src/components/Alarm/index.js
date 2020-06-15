@@ -33,7 +33,7 @@ function Alarm({ id, currentFilters, name, source, status, previous_status, trig
     });
   }, [name, source, trigger_condition, trigger_value, type]);
 
-  const isPaused = status.id === ALARM_STATUS.PAUSED;
+  const isPaused = useMemo(() => status.id === ALARM_STATUS.PAUSED, [status.id]);
 
   const handleEdit = () => {
     setIsEditing(true);
