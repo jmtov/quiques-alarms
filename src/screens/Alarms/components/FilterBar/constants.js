@@ -8,17 +8,17 @@ const nameValidations = [
 
 export const FIELDS = {
   NAME_FILTER: {
-    id: 'name-filter',
+    id: 'name_filter',
     label: 'Name Filter',
-    name: 'name-filter',
+    name: 'name_filter',
     placeholder: 'Filter by name',
     validate: nameValidations
   },
   STATUS_FILTER: {
-    id: 'status-filter',
+    id: 'status_filter',
     component: Dropdown,
     label: 'Status Filter',
-    name: 'status-filter',
+    name: 'status_filter',
     placeholder: 'Filter by status'
   },
 };

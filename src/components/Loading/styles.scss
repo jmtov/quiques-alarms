@@ -1,0 +1,24 @@
+.loading {
+  align-items: center;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+
+  &__logo {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: rotate;
+    animation-iteration-count: infinite;
+    height: 70px;
+    margin-bottom: 1rem;
+    width: 70px;
+  }
+
+  &__text {
+    color: var(--fg-color);
+    font-size: var(--fs-subtitle);
+    font-weight: bold;
+  }
+}

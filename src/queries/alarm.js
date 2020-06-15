@@ -1,8 +1,11 @@
 import { gql } from 'apollo-boost';
 
 export const GET_ALARMS_QUERY = gql`
-  {
-    alarms {
+  query AlarmQuery (
+    $name_filter: String,
+    $status_filter: Int
+  ) {
+    alarms(where: { name: {_ilike: $name_filter }, status_id: { _eq: $status_filter }},) {
       id,
       name,
       previous_status {

@@ -31,8 +31,8 @@ function Field({
 
   const handleChange = useCallback(event => {
     setValue(event.target.value);
-    if (onChange) onChange({ name, value: event.target.value });
-  }, [name, onChange]);
+    if (onChange) onChange({ name: event.target.name, value: event.target.value });
+  }, [onChange]);
 
   const handleBlur = useCallback(event => {
     setIsFocused(false);

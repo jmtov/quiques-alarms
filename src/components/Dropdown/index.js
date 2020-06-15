@@ -6,15 +6,16 @@ import icons from 'constants/icons';
 
 import './styles.scss';
 
-function Dropdown({ className, disabled, id, name, options, onBlur, onChange, onFocus, value }) {
+function Dropdown({ className, disabled, id, multiple, name, options, onBlur, onChange, onFocus, value }) {
   return (
     <>
       <select
         className={`${className} select`}
-        disabled={disabled}
-        name={name}
-        id={id}
         defaultValue={value || null}
+        disabled={disabled}
+        id={id}
+        multiple={multiple}
+        name={name}
         onBlur={onBlur}
         onChange={onChange}
         onFocus={onFocus}
@@ -32,6 +33,7 @@ Dropdown.propTypes = {
   className: string,
   disabled: bool,
   id: oneOfType([number, string]),
+  multiple: bool,
   name: string,
   onBlur: func,
   onChange: func,

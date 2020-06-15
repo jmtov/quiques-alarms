@@ -1,4 +1,5 @@
 import React, { useContext, useMemo, useState, useCallback } from 'react';
+import { func } from 'prop-types';
 
 import StaticPropsContext from 'contexts/staticProps';
 import ICONS from 'constants/icons';
@@ -21,7 +22,7 @@ function FilterBar({ onFilterChange }) {
 
   const mappedStatuses = useMemo(() => {
     if (alarmStatuses?.length) {
-      const newStatuses = [{ id: null, displayName: 'No filter' }];
+      const newStatuses = [{ id: '', displayName: 'No filter' }];
       return newStatuses.concat(alarmStatuses.map(source => ({ ...source, displayName: source.display_name })));
     }
     return null;
@@ -29,7 +30,10 @@ function FilterBar({ onFilterChange }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    onFilterChange(values);
+    onFilterChange({
+      nameFilter: values[FIELDS.NAME_FILTER.name] || null,
+      statusFilter: Number(values[FIELDS.STATUS_FILTER.name]) || null
+    });
   };
 
   const handleFieldError = useCallback(({ name: fieldName, errors: fieldErrors }) => {
@@ -39,7 +43,6 @@ function FilterBar({ onFilterChange }) {
   }, []);
 
   const handleFieldChange = useCallback(({ name: fieldName, value: fieldValue }) => {
-    console.log(fieldName, fieldValue);
     if (fieldName) {
       setValues(values => ({ ...values, [fieldName]: fieldValue }));
     }
@@ -50,7 +53,7 @@ function FilterBar({ onFilterChange }) {
       <Field
         className="filter-bar__field"
         onChange={handleFieldChange}
-        onError={handleFieldChange}
+        onError={handleFieldError}
         value={values[FIELDS.NAME_FILTER.name]}
         {...FIELDS.NAME_FILTER}
       />
@@ -60,9 +63,9 @@ function FilterBar({ onFilterChange }) {
         onError={handleFieldError}
         options={mappedStatuses}
         value={values[FIELDS.STATUS_FILTER.name]}
+        type="number"
         {...FIELDS.STATUS_FILTER}
       />
-
       <button
         className="filter-bar__submit-button"
         onClick={handleSubmit}
@@ -73,7 +76,10 @@ function FilterBar({ onFilterChange }) {
       </button>
     </form>
   );
-
 }
+
+FilterBar.propTypes = {
+  onFilterChange: func,
+};
 
 export default FilterBar;

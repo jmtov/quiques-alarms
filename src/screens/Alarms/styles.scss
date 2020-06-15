@@ -1,9 +1,5 @@
 .alarms-screen {
   display: flex;
   flex-direction: column;
-}
-
-.alarms__list {
-  flex-grow: 1;
-  padding: 2rem;
+  height: 100%;
 }
