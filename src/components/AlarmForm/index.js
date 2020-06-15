@@ -10,8 +10,9 @@ import Icon from 'components/Icon';
 
 import { FIELDS } from './constants';
 import './styles.scss';
+import { cn } from 'utils/style';
 
-function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
+function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit }) {
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialValues);
@@ -58,30 +59,32 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
   const mappedSources = useMemo(() => {
     if (sources && sources.length) {
       const newSources = sources.map(source => ({ ...source, displayName: source.name }));
-      return newSources;
+      return [{ id: '', displayName: 'Select a source' }, ...newSources];
     }
     return null;
   }, [sources]);
 
   const mappedAlarmTypes = useMemo(() => {
     if (alarmTypes && alarmTypes.length) {
-      return alarmTypes.map(alarmType => ({ ...alarmType, displayName: alarmType.display_name }));
+      const newAlarms = alarmTypes.map(alarmType => ({ ...alarmType, displayName: alarmType.display_name }));
+      return [{ id: '', displayName: 'Select a metric' }, ...newAlarms];
     }
     return null;
   }, [alarmTypes]);
 
   const mappedTriggerConditions = useMemo(() => {
     if (triggerConditions && triggerConditions.length) {
-      return triggerConditions.map(alarmType => ({ ...alarmType, displayName: alarmType.display_name }));
+      const newTriggerConditions = triggerConditions.map(alarmType => ({ ...alarmType, displayName: alarmType.display_name }));
+      return [{ id: '', displayName: 'Select a condition' }, ...newTriggerConditions];
     }
     return null;
   }, [triggerConditions]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={cn('alarm-form', className)} onSubmit={handleSubmit}>
       <Field
         id={`${id}-${FIELDS.NAME.name}`}
-        className="alarm__name"
+        className="alarm-form__name"
         onChange={handleFieldChange}
         onError={handleFieldError}
         value={values[FIELDS.NAME.name]}
@@ -90,7 +93,7 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
       />
       <Field
         id={`${id}-${FIELDS.SOURCE_ID.name}`}
-        className="alarm__source"
+        className="alarm-form__source"
         onChange={handleFieldChange}
         onError={handleFieldError}
         options={mappedSources}
@@ -100,7 +103,7 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
       />
       <Field
         id={`${id}-${FIELDS.TYPE_ID.name}`}
-        className="alarm__trigger-type"
+        className="alarm-form__trigger-type"
         onChange={handleFieldChange}
         onError={handleFieldError}
         options={mappedAlarmTypes}
@@ -110,7 +113,7 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
       />
       <Field
         id={`${id}-${FIELDS.TRIGGER_CONDITION_ID.name}`}
-        className="alarm__trigger-condition"
+        className="alarm-form__trigger-condition"
         onChange={handleFieldChange}
         onError={handleFieldError}
         options={mappedTriggerConditions}
@@ -120,7 +123,7 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
       />
       <Field
         id={`${id}-${FIELDS.TRIGGER_VALUE.name}`}
-        className="alarm__trigger-value"
+        className="alarm-form__trigger-value"
         onChange={handleFieldChange}
         onError={handleFieldError}
         validate={values[FIELDS.TRIGGER_VALUE.validate]}
@@ -128,9 +131,9 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
         {...FIELDS.TRIGGER_VALUE}
         {...commonFieldOptions}
       />
-      <span className="alarm__trigger-unit">%</span>
+      <span className="alarm-form__trigger-unit">%</span>
       {isEditing && (
-        <div className="alarm__actions">
+        <div className="alarm-form__actions">
           <button
             className="action-button"
             onClick={handleSubmit}
@@ -153,6 +156,10 @@ function Form({ id, initialValues, isEditing, onReset, onSubmit }) {
   );
 }
 
-Form.propTypes = alarmPropType;
+AlarmForm.defaultProps = {
+  initialValues: {}
+};
 
-export default Form;
+AlarmForm.propTypes = alarmPropType;
+
+export default AlarmForm;

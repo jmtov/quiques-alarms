@@ -11,7 +11,6 @@ import Errored from 'components/Errored';
 import './styles.scss';
 
 function AlarmsList({ nameFilter, statusFilter }) {
-  console.log(nameFilter, statusFilter);
   const { loading, error, data } = useQuery(
     GET_ALARMS_QUERY,
     { variables: {

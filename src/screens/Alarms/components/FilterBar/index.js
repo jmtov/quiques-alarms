@@ -22,8 +22,8 @@ function FilterBar({ onFilterChange }) {
 
   const mappedStatuses = useMemo(() => {
     if (alarmStatuses?.length) {
-      const newStatuses = [{ id: '', displayName: 'No filter' }];
-      return newStatuses.concat(alarmStatuses.map(source => ({ ...source, displayName: source.display_name })));
+      const newStatuses = alarmStatuses.map(source => ({ ...source, displayName: source.display_name }));
+      return [{ id: '', displayName: 'No filter' }, ...newStatuses];
     }
     return null;
   }, [alarmStatuses]);

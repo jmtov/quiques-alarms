@@ -2,4 +2,17 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  &__toolbar {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .alarms-screen {
+    &__toolbar {
+      bottom: 3.25rem;
+    }
+  }
 }

@@ -8,11 +8,11 @@ import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
 import { shallowCompare } from 'utils/helpers';
 import ICONS from 'constants/icons';
 
+import AlarmForm from 'components/AlarmForm';
+import { FIELDS } from 'components/AlarmForm/constants';
 import Icon from 'components/Icon';
 import StatusIndicator from 'components/StatusIndicator';
 
-import Form from './components/Form';
-import { FIELDS } from './components/Form/constants';
 import './styles.scss';
 
 // TODO: Might need to refactor this for a better UX
@@ -55,7 +55,8 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
   return (
     <div className="alarm">
       <StatusIndicator className="alarm__status" status={status} />
-      <Form
+      <AlarmForm
+        className="alarm__form"
         id={id}
         initialValues={initialFormValues}
         isEditing={isEditing}

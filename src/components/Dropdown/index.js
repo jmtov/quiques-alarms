@@ -21,7 +21,13 @@ function Dropdown({ className, disabled, id, multiple, name, options, onBlur, on
         onFocus={onFocus}
       >
         {!!options?.length && options.map(option => (
-          <option key={option.id} value={option.id}>{option.displayName}</option>
+          <option
+            key={option.id}
+            value={option.id}
+            // disabled={!Number.isFinite(option.id)}
+          >
+            {option.displayName}
+          </option>
         ))}
       </select>
       {!disabled && <Icon name={icons.KEYBOARD_ARROW_DOWN} className={'select__icon'} />}
