@@ -7,6 +7,8 @@ import { GET_ALARM_TYPES_QUERY } from 'queries/alarmTypes';
 import { GET_ALARM_STATUSES_QUERY } from 'queries/alarmStatuses';
 import { GET_TRIGGER_CONDITIONS_QUERY } from 'queries/triggerConditions';
 
+import Loading from 'components/Loading';
+
 const StaticPropsContext = React.createContext();
 
 export const StaticPropsContextProvider = ({ children }) => {
@@ -14,6 +16,15 @@ export const StaticPropsContextProvider = ({ children }) => {
   const alarmTypes = useQuery(GET_ALARM_TYPES_QUERY);
   const alarmStatuses = useQuery(GET_ALARM_STATUSES_QUERY);
   const triggerConditions = useQuery(GET_TRIGGER_CONDITIONS_QUERY);
+
+  if (
+    alarmTypes.loading
+    && alarmStatuses.loading
+    && sources.loading
+    && triggerConditions.loading
+  ) {
+    return <Loading />;
+  }
 
   return (
     <StaticPropsContext.Provider
@@ -23,13 +34,7 @@ export const StaticPropsContextProvider = ({ children }) => {
         sources: sources.data?.sources,
         triggerConditions: triggerConditions.data?.trigger_conditions
       }}>
-      {
-        !sources.loading
-        && !alarmTypes.loading
-        && !triggerConditions.loading
-        && !alarmStatuses.loading
-        && children
-      }
+      {children}
     </StaticPropsContext.Provider>
   );
 };

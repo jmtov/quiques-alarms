@@ -1,6 +1,6 @@
 export const normalizeFilters = filters => {
   return {
-    name_filter: filters?.nameFilter ? `%${filters.nameFilter}%` : null,
-    status_filter: filters.statusFilter ? filters.statusFilter : null,
+    name_filter: filters?.name_filter ? `%${filters.name_filter}%` : null,
+    status_filter: filters.status_filter ? filters.status_filter : null,
   };
 };
