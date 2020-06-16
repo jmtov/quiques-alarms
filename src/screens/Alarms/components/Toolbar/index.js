@@ -10,7 +10,7 @@ import AlarmForm from 'components/AlarmForm';
 
 import './styles.scss';
 
-function Toolbar({ className, filters }) {
+function Toolbar({ className }) {
   const [addAlarm] = useAddAlarm();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -24,9 +24,9 @@ function Toolbar({ className, filters }) {
 
   // TODO: Might need to check values before sending.
   const handleDone = useCallback(values => {
-    addAlarm(values, filters);
+    addAlarm(values);
     setIsAdding(false);
-  }, [addAlarm, filters]);
+  }, [addAlarm]);
 
   return (
     <div className={cn('toolbar', className)}>
@@ -49,11 +49,7 @@ function Toolbar({ className, filters }) {
 }
 
 Toolbar.propTypes = {
-  className: string,
-  filters: shape({
-    name_filter: string,
-    status_filter: number,
-  })
+  className: string
 };
 
 export default Toolbar;

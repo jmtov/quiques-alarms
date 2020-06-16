@@ -1,5 +1,4 @@
 import React, { useContext, useMemo, useState, useCallback } from 'react';
-import { func, number, shape, string } from 'prop-types';
 
 import StaticPropsContext from 'contexts/staticProps';
 import ICONS from 'constants/icons';
@@ -10,13 +9,10 @@ import Icon from 'components/Icon';
 import { FIELDS } from './constants';
 import './styles.scss';
 
-function FilterBar({ onFilterChange, filters }) {
+function FilterBar() {
   const { alarmStatuses } = useContext(StaticPropsContext);
   const [, setErrors] = useState(null);
-  const [values, setValues] = useState({
-    [FIELDS.NAME_FILTER.name]: filters[FIELDS.NAME_FILTER.name] || '',
-    [FIELDS.STATUS_FILTER.name]: filters[FIELDS.STATUS_FILTER.name]
-  });
+  const [values, setValues] = useState({});
 
   const mappedStatuses = useMemo(() => {
     if (alarmStatuses?.length) {
@@ -29,10 +25,7 @@ function FilterBar({ onFilterChange, filters }) {
   const handleSubmit = event => {
     console.log('Here');
     event.preventDefault();
-    onFilterChange({
-      nameFilter: values[FIELDS.NAME_FILTER.name] || null,
-      statusFilter: Number(values[FIELDS.STATUS_FILTER.name]) || null
-    });
+    // TODO: Add filtering function from new context TBDeveloped
   };
 
   const handleFieldError = useCallback(({ name: fieldName, errors: fieldErrors }) => {
@@ -76,13 +69,5 @@ function FilterBar({ onFilterChange, filters }) {
     </form>
   );
 }
-
-FilterBar.propTypes = {
-  onFilterChange: func,
-  filters: shape({
-    name_filter: string,
-    status_filter: number,
-  })
-};
 
 export default FilterBar;
