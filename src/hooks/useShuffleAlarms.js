@@ -22,6 +22,7 @@ export const useShuffleAlarms = () => {
   const { data, loading: alarmsLoading } = useQuery(GET_ALARMS_QUERY);
   const [updateAlarm, { error, loading:  mutationLoading }] = useMutation(SET_ALARM_STATE_MUTATION);
 
+  // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
   const shuffleAlarmsState = useCallback(() => {
     const newStates = randomizeAlarmsStates(data?.alarms);
 
@@ -33,5 +34,5 @@ export const useShuffleAlarms = () => {
     });
   }, [updateAlarm, data]);
 
-  return [shuffleAlarmsState, { error, loading: alarmsLoading && mutationLoading }];
+  return [shuffleAlarmsState, { error, loading: alarmsLoading || mutationLoading }];
 };

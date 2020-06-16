@@ -1,13 +1,14 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import StaticPropsContext from 'contexts/staticProps';
+import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
 import { alarmPropType } from 'propTypes/alarms';
 import { shallowCompare } from 'utils/helpers';
 import { cn } from 'utils/style';
 import ICONS from 'constants/icons';
 
+import ActionButton from 'components/ActionButton';
 import Field from 'components/Field';
-import Icon from 'components/Icon';
 
 import { FIELDS } from './constants';
 import './styles.scss';
@@ -16,6 +17,7 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialValues);
+  const [updateAlarm] = useUpdateAlarm(id);
 
   const commonFieldOptions = useMemo(() => {
     return  {
@@ -33,6 +35,7 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
     if (!hasErrors) {
       if (hasChanged) {
         onSubmit(values);
+        updateAlarm(values);
       } else {
         handleReset();
       }
@@ -134,22 +137,18 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
       <span className="alarm-form__trigger-unit">%</span>
       {isEditing && (
         <div className="alarm-form__actions">
-          <button
-            className="action-button"
+          <ActionButton
             onClick={handleSubmit}
             title="Save Changes"
             type="submit"
-          >
-            <Icon name={ICONS.DONE} />
-          </button>
-          <button
-            className="action-button"
+            icon={ICONS.DONE}
+          />
+          <ActionButton
             onClick={handleReset}
-            title="Cancel Changes"
+            title="Cancel"
             type="reset"
-          >
-            <Icon name={ICONS.CLEAR} />
-          </button>
+            icon={ICONS.CLEAR}
+          />
         </div>
       )}
     </form>

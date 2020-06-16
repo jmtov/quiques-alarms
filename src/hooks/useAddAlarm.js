@@ -19,6 +19,7 @@ export const useAddAlarm = filters => {
     updateAlarmsQueryCache(cache, data, filters);
   }, [filters]);
 
+  // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
   const updateAlarm = useCallback(values => {
     _addAlarm({
       variables: { ...values },

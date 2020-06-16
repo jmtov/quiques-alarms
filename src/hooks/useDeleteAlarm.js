@@ -20,6 +20,7 @@ export const useDeleteAlarm = (id, filters) => {
     updateAlarmsQueryCache(cache, id, filters);
   }, [id, filters]);
 
+  // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
   const deleteAlarm = useCallback(() => {
     if (!id) setError('No id provided.');
     _deleteAlarm({

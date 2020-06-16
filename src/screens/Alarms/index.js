@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 
 import { normalizeFilters } from 'utils/transforms';
 
@@ -7,12 +7,13 @@ import FilterBar from './components/FilterBar';
 import Toolbar from './components/Toolbar';
 import './styles.scss';
 
-
 function Alarms() {
-  const [filters, setFilters] = useState(normalizeFilters({}));
+  const [rawFilters, setRawFilters] = useState({});
+
+  const filters = useMemo(() => normalizeFilters(rawFilters), [rawFilters]);
 
   const handleFilterChange = useCallback(newFilters => {
-    setFilters(normalizeFilters(newFilters));
+    setRawFilters(newFilters);
   }, []);
 
   return (

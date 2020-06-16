@@ -23,8 +23,9 @@ function updateAlarmsQueryCache(cache, updatedAlarmData) {
 export const useToggleAlarmStatus = (id, status_id, previous_status_id) => {
   const [isPaused, setIsPaused] = useState(status_id === ALARM_STATUS.PAUSED);
   const [error, setError] = useState(null);
-  const [toggleAlarmStatus, { data }] = useMutation(SET_ALARM_STATE_MUTATION);
+  const [toggleAlarmStatus, { data, loading, _error }] = useMutation(SET_ALARM_STATE_MUTATION);
 
+  // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
   const toggleAlarm = useCallback(() => {
     if (!id) setError('No id provided.');
     if (isPaused) {
@@ -42,5 +43,5 @@ export const useToggleAlarmStatus = (id, status_id, previous_status_id) => {
     }
   }, [isPaused, id, status_id, previous_status_id, toggleAlarmStatus]);
 
-  return [toggleAlarm, { data, error }];
+  return [toggleAlarm, { data, error: _error || error, loading }];
 };

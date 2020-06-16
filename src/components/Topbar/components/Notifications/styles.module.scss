@@ -1,20 +1,5 @@
 .notification-button {
-  align-items: center;
-  appearance: none;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  font-size: 1.25rem;
-  padding: 0.5rem;
-  cursor: pointer;
-
-  &__icon {
-    flex: 0 0;
-    font-size: 1.25rem;
-    margin: 0;
-    padding: 1rem;
-  }
+  padding: 0 2rem;
 
   &__bg {
     --size: 1.25rem;

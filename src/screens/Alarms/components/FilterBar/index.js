@@ -27,6 +27,7 @@ function FilterBar({ onFilterChange, filters }) {
   }, [alarmStatuses]);
 
   const handleSubmit = event => {
+    console.log('Here');
     event.preventDefault();
     onFilterChange({
       nameFilter: values[FIELDS.NAME_FILTER.name] || null,
