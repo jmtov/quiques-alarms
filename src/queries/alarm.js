@@ -54,7 +54,7 @@ ${ALARM_FRAGMENT}
 `;
 
 export const SET_ALARM_STATE_MUTATION = gql`
-  mutation toggleAlarmPausedStatus ($previous_status_id: Int!, $status_id: Int!, $id: Int!) {
+  mutation ToggleAlarmPausedStatus ($previous_status_id: Int!, $status_id: Int!, $id: Int!) {
     update_alarms(
       where: { id: { _eq: $id } },
       _set: { status_id: $status_id, previous_status_id: $previous_status_id }
@@ -78,7 +78,7 @@ export const SET_ALARM_STATE_MUTATION = gql`
 
 
 export const UPDATE_ALARM_MUTATION = gql`
-  mutation updateAlarm (
+  mutation UpdateAlarm (
     $id: Int!,
     $name: String!,
     $source_id: Int!,
@@ -107,7 +107,7 @@ ${ALARM_FRAGMENT}
 `;
 
 export const DELETE_ALARM_MUTATION = gql`
-  mutation deleteAlarm ($id: Int!) {
+  mutation DeleteAlarm ($id: Int!) {
     delete_alarms(where: { id: { _eq: $id }}) {
       affected_rows
     }
