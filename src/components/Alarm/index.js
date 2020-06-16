@@ -1,26 +1,18 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { alarmPropType } from 'propTypes/alarms';
-import { ALARM_STATUS } from 'constants/alarms';
-import { useToggleAlarmStatus } from 'hooks/useToggleAlarmStatus';
-import { useDeleteAlarm } from 'hooks/useDeleteAlarm';
-import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
 import ICONS from 'constants/icons';
+import { alarmPropType } from 'propTypes/alarms';
 
+import ActionButton from 'components/ActionButton';
 import AlarmForm from 'components/AlarmForm';
 import { FIELDS } from 'components/AlarmForm/constants';
-import Icon from 'components/Icon';
 import StatusIndicator from 'components/StatusIndicator';
 
+import DeleteAlarmButton from './components/DeleteAlarmButton';
+import PauseAlarmButton from './components/PauseAlarmButton';
 import './styles.scss';
 
-// TODO: Might need to refactor this for a better UX
-//       Also check why the list is re-rendering due to "Hooks Changed".
-function Alarm({ id, currentFilters, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
-  const [toggleAlarm] = useToggleAlarmStatus(id, status.id, previous_status?.id);
-  // TODO: Would be better if user had a confirmation for this action.
-  const [deleteAlarm] = useDeleteAlarm(id, currentFilters);
-  const [updateAlarm] = useUpdateAlarm(id, currentFilters);
+function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const initialFormValues = useMemo(() => {
@@ -33,20 +25,17 @@ function Alarm({ id, currentFilters, name, source, status, previous_status, trig
     });
   }, [name, source, trigger_condition, trigger_value, type]);
 
-  const isPaused = useMemo(() => status.id === ALARM_STATUS.PAUSED, [status.id]);
-
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     setIsEditing(true);
-  };
+  }, []);
 
   const handleCancel = useCallback(() => {
     setIsEditing(false);
   }, []);
 
-  const handleDone = useCallback((newValues) => {
-    updateAlarm(newValues);
+  const handleDone = useCallback(() => {
     setIsEditing(false);
-  }, [updateAlarm]);
+  }, []);
 
   return (
     <div className="alarm">
@@ -62,17 +51,9 @@ function Alarm({ id, currentFilters, name, source, status, previous_status, trig
       />
       {!isEditing && (
         <div className="alarm__actions">
-          <>
-            <button className="action-button" onClick={handleEdit} title="Edit alarm">
-              <Icon name={ICONS.CREATE} />
-            </button>
-            <button className="action-button" onClick={deleteAlarm} title="Delete alarm">
-              <Icon name={ICONS.DELETE} />
-            </button>
-            <button className="action-button" onClick={toggleAlarm} title={isPaused ? 'Resume alarm' : 'Pause alarm'}>
-              <Icon name={isPaused ? ICONS.PLAY_ARROW : ICONS.PAUSE} />
-            </button>
-          </>
+          <ActionButton onClick={handleEdit} title="Edit alarm" icon={ICONS.CREATE} />
+          <DeleteAlarmButton id={id} />
+          <PauseAlarmButton id={id} statusId={status.id} previousStatusId={previous_status?.id} />
         </div>
       )}
     </div>
@@ -81,4 +62,4 @@ function Alarm({ id, currentFilters, name, source, status, previous_status, trig
 
 Alarm.propTypes = alarmPropType;
 
-export default Alarm;
+export default React.memo(Alarm);

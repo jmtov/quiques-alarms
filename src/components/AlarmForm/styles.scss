@@ -16,20 +16,7 @@
   }
 
   &__actions {
-    position: sticky;
-    right: 0;
-  }
-}
-
-.action-button {
-  background: none;
-  cursor: pointer;
-  font-size: 1.25rem;
-  padding: 0.5rem;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    display: flex;
   }
 }
 

@@ -10,6 +10,7 @@ import Errored from 'components/Errored';
 
 import './styles.scss';
 
+window.a = [];
 function AlarmsList({ filters }) {
   const { loading, error, data } = useQuery(
     GET_ALARMS_QUERY,
