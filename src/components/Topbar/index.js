@@ -2,6 +2,9 @@ import React from 'react';
 import { string } from 'prop-types';
 
 import Logo from 'assets/logo.png';
+import ErrorBoundary from 'components/ErrorBoundary';
+import ActionButton from 'components/ActionButton';
+import ICONS from 'constants/icons';
 
 import Title from './components/Title';
 import Notifications from './components/Notifications';
@@ -14,8 +17,12 @@ function Topbar() {
       <img src={Logo} className="topbar__logo" alt="logo" />
       <Title className="topbar__title" />
       <div className="topbar__actions">
-        <ShuffleAlarmsStateButton />
-        <Notifications />
+        <ErrorBoundary errorComponent={<ActionButton icon={ICONS.SHUFFLE} disabled/>}>
+          <ShuffleAlarmsStateButton />
+        </ErrorBoundary>
+        <ErrorBoundary errorComponent={<ActionButton icon={ICONS.NOTIFICATIONS_NONE} disabled/>}>
+          <Notifications />
+        </ErrorBoundary>
       </div>
     </div>
   );

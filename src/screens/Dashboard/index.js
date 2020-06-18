@@ -1,12 +1,16 @@
 import React from 'react';
 import SummaryCard from 'components/SummaryCard';
 
+import ErrorBoundary from 'components/ErrorBoundary';
+
 import './styles.scss';
 
 function Dashboard() {
   return (
     <div className="dashboard-screen">
-      <SummaryCard />
+      <ErrorBoundary>
+        <SummaryCard />
+      </ErrorBoundary>
     </div>
   );
 }
