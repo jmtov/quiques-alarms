@@ -1,0 +1,14 @@
+.notification-button {
+  padding: 0 2rem;
+
+  &__bg {
+    --size: 1.25rem;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

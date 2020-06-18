@@ -1,0 +1,103 @@
+.status {
+  --size: 0.75rem;
+  align-items: center;
+  border-radius: var(--size);
+  display: flex;
+  justify-content: center;
+  height: var(--size);
+  min-width: var(--size);
+  outline: none;
+  padding: 0 0.5rem;
+  position: relative;
+  user-select: none;
+
+  &::before {
+    all: inherit;
+    content: '';
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &__tooltip {
+    background-color: inherit;
+    border-radius: 1rem;
+    color: inherit;
+    left: 0;
+    opacity: 0;
+    padding: 0.5rem 1rem;
+    pointer-events: none;
+    position: absolute;
+    transform: scale(0);
+    transform-origin: left center;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  &__label {
+    color: inherit;
+    display: flex;
+    font-size: var(--fs-text--small);
+    font-weight: bold;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &--paused {
+    background-color: var(--status-warning);
+  }
+
+  &--on {
+    background-color: var(--status-error);
+    color: var(--bg-color);
+
+    &::before {
+      animation-duration: 1.5s;
+      animation-fill-mode: both;
+      animation-iteration-count: infinite;
+      animation-name: pulse;
+      opacity: 0.5;
+    }
+  }
+
+  // Might be more appropriate this one
+  // &--off {
+  //   background-color: var(--status-ok);
+  // }
+
+  &--off {
+    background-color: var(--status-disabled);
+  }
+
+  &:hover,
+  &:focus {
+    .status__tooltip {
+      opacity: 1;
+      pointer-events: all;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .status {
+    &--on {
+      color: var(--bg-color);
+    }
+
+    &--off {
+      color: var(--bg-color);
+    }
+
+    &--paused {
+      color: var(--bg-color);
+    }
+  }
+}

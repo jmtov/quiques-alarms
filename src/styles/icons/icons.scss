@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('./fonts/icomoon.eot?6lwyuc');
+  src:  url('./fonts/icomoon.eot?6lwyuc#iefix') format('embedded-opentype'),
+    url('./fonts/icomoon.ttf?6lwyuc') format('truetype'),
+    url('./fonts/icomoon.woff?6lwyuc') format('woff'),
+    url('./fonts/icomoon.svg?6lwyuc#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  &::before {
+    color: inherit;
+  }
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-error_outline::before {
+  content: "\e900";
+}
+.icon-equalizer::before {
+  content: "\e901";
+}
+.icon-pause::before {
+  content: "\e902";
+}
+.icon-play_arrow::before {
+  content: "\e903";
+}
+.icon-add::before {
+  content: "\e904";
+}
+.icon-clear::before {
+  content: "\e90b";
+}
+.icon-create::before {
+  content: "\e90c";
+}
+.icon-remove::before {
+  content: "\e905";
+}
+.icon-keyboard_arrow_down::before {
+  content: "\e906";
+}
+.icon-notifications::before {
+  content: "\e907";
+}
+.icon-notifications_none::before {
+  content: "\e90d";
+}
+.icon-notifications_active::before {
+  content: "\e908";
+}
+.icon-delete::before {
+  content: "\e909";
+}
+.icon-search::before {
+  content: "\e90a";
+}
+.icon-done:before {
+  content: "\e90e";
+}
+.icon-shuffle:before {
+  content: "\e90f";
+}

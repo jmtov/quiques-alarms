@@ -1,0 +1,66 @@
+.field {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  position: relative;
+  width: 100%;
+
+  &--disabled,
+  &--read-only {
+    .field__input {
+      border-color: transparent;
+      outline: none;
+    }
+  }
+
+  &--focused {
+    .field__input {
+      border-color: var(--fg-color);
+    }
+  }
+
+  &--error {
+    .field__input {
+      border-color: var(--status-error);
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  &__input {
+    all: inherit;
+    appearance: none;
+    background-color: transparent;
+    border: thin solid var(--fg-color--translucent-200);
+    display: flex;
+    line-height: 1.5;
+    outline-width: 2px;
+    padding: 0.5rem;
+    transition: border 0.2s;
+  }
+
+  &__errors {
+    animation-name: appear;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+    background-color: var(--status-error);
+    color: var(--bg-color);
+    font-size: var(--fs-text--small);
+    font-weight: normal;
+    justify-self: center;
+    padding: 0.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform-origin: top left;
+    min-width: 100%;
+    width: auto;
+    white-space: nowrap;
+    z-index: 1;
+  }
+}

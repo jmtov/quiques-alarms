@@ -1,0 +1,24 @@
+:root {
+  --accent-color: #df0000;
+  --bg-color: #fafafa;
+  --bg-color--translucent-100: #fafafa22;
+  --bg-color--translucent-200: #fafafa44;
+  --fg-color: #222222;
+  --fg-color--translucent-100: #22222222;
+  --fg-color--translucent-200: #22222244;
+  --status-disabled: #cccccc;
+  --status-warning: #ffc400;
+  --status-error: #ff0044;
+  --status-ok: #11e867;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg-color: #aaaaaa;
+    --fg-color--translucent-100: #aaaaaa99;
+    --fg-color--translucent-200: #aaaaaaaa;
+    --bg-color: #111111;
+    --bg-color--translucent-100: #11111122;
+    --bg-color--translucent-200: #11111144;
+  }
+}

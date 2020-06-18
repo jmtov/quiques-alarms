@@ -1,0 +1,21 @@
+.error {
+  align-items: center;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+
+  &__title {
+    color: var(--accent-color);
+    font-size: var(--fs-title);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  &__message {
+    color: var(--fg-color);
+    font-size: var(--fs-subtitle);
+    font-weight: bold;
+  }
+}

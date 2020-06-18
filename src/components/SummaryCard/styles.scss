@@ -1,0 +1,14 @@
+.summary-card {
+  align-items: center;
+  border: thin solid var(--fg-color--translucent-200);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 300px;
+  min-width: 400px;
+
+  &__title {
+    font-size: var(--fs-title--big);
+    margin-bottom: 1rem;
+  }
+}

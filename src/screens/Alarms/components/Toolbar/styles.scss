@@ -1,0 +1,54 @@
+.toolbar {
+  display: flex;
+  overflow: hidden;
+  pointer-events: none;
+  width: 100%;
+  z-index: var(--z-toolbar);
+
+  &__form {
+    background-color: var(--bg-color);
+    border-top: thin solid var(--fg-color--translucent-200);
+    max-width: 100%;
+    padding: 2rem 2rem 2.75rem;
+    pointer-events: initial;
+    transition: transform 0.2s;
+
+    &--hidden {
+      transform: translateY(150%);
+    }
+  }
+
+  &__actions {
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    position: absolute;
+    right: 0;
+  }
+
+  &__button {
+    align-items: center;
+    background-color: var(--fg-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    display: flex;
+    font-size: var(--fs-text);
+    padding: 1rem;
+    pointer-events: initial;
+    transition: transform 0.2s;
+  }
+}
+
+.add-button {
+  &__icon {
+    bottom: unset;
+    margin-right: 0.5rem;
+    position: relative;
+    right: unset;
+  }
+
+  &--hidden {
+    transform: translateX(150%);
+  }
+}
