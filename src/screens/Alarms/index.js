@@ -6,15 +6,18 @@ import AlarmsList from './components/AlarmsList';
 import FilterBar from './components/FilterBar';
 import Toolbar from './components/Toolbar';
 import './styles.scss';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 function Alarms() {
   return (
     <AlarmsContextProvider>
-      <div className="alarms-screen">
-        <FilterBar />
-        <AlarmsList />
-        <Toolbar />
-      </div>
+      <ErrorBoundary>
+        <div className="alarms-screen">
+          <FilterBar />
+          <AlarmsList />
+          <Toolbar />
+        </div>
+      </ErrorBoundary>
     </AlarmsContextProvider>
   );
 }
