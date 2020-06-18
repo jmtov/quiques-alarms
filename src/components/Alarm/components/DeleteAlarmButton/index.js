@@ -6,14 +6,19 @@ import ICONS from 'constants/icons';
 
 import ActionButton from 'components/ActionButton';
 
+// TODO: Better Error handling
 function DeleteAlarmButton({ id }) {
   // TODO: Would be better if user had a confirmation for this action.
-  const [deleteAlarm, { error, loading }] = useDeleteAlarm(id);
+  const [deleteAlarm, { loading }] = useDeleteAlarm(id);
 
   return (
-    <ActionButton icon={ICONS.DELETE} disabled={loading} title="Delete alarm" onClick={deleteAlarm} loading={loading}>
-      {error && <span>error</span>}
-    </ActionButton>
+    <ActionButton
+      icon={ICONS.DELETE}
+      disabled={loading}
+      title="Delete alarm"
+      onClick={deleteAlarm}
+      loading={loading}
+    />
   );
 }
 

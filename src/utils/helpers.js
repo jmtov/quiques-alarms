@@ -11,3 +11,18 @@ export const shallowCompare = (obj1, obj2) => {
 
   return [differences.some(Boolean), differences];
 };
+
+export const randomizeAlarmsStates = alarms => {
+  if (alarms) {
+    const sources = {};
+    alarms.forEach(alarm => {
+      const uId = `${alarm.source.id}-${alarm.type.id}`;
+      const newStatusId = getRandomInt(2);
+      const previousId = newStatusId === 2 ? getRandomInt(2) : 0;
+      if (!sources[uId]) {
+        sources[uId] = { id: alarm.id, previous_status_id: previousId, status_id: newStatusId };
+      }
+    });
+    return sources;
+  }
+};

@@ -7,6 +7,7 @@ import { useAddAlarm } from 'hooks/useAddAlarm';
 import Icon from 'components/Icon';
 import AlarmForm from 'components/AlarmForm';
 
+import ShuffleAlarmsStateButton from './components/ShuffleAlarmsStateButton';
 import './styles.scss';
 
 function Toolbar() {
@@ -35,14 +36,16 @@ function Toolbar() {
         onSubmit={handleDone}
         isEditing={isAdding}
       />
-      <button
-        className={cn('add-button', isAdding && 'add-button--hidden')}
-        onClick={handleAdd}
-        title="Add Alarm"
-      >
-        <Icon className="add-button__icon" name={ICONS.ADD} />
-        <span className="add-button__text">Add Alarm</span>
-      </button>
+      <div className="toolbar__actions">
+        <button
+          className={cn('toolbar__button', 'add-button', isAdding && 'add-button--hidden')}
+          onClick={handleAdd}
+          title="Add Alarm"
+        >
+          <Icon className="add-button__icon" name={ICONS.ADD} />
+          <span className="add-button__text">Add Alarm</span>
+        </button>
+      </div>
     </div>
   );
 }
