@@ -40,9 +40,11 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
     setIsEditing(false);
   }, [updateAlarm]);
 
+  console.log(status);
+
   return (
     <div className="alarm">
-      <StatusIndicator className="alarm__status" status={status} />
+      <StatusIndicator className="alarm__status" status={status} label={status.name.toUpperCase()} />
       <AlarmForm
         className="alarm__form"
         id={id}

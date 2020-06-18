@@ -86,9 +86,7 @@ export const UPDATE_ALARM_MUTATION = gql`
       where: { id: {_eq: $id} },
       _set: {
         name: $name
-        previous_status_id: 0
         source_id: $source_id
-        status_id: 0,
         trigger_condition_id: $trigger_condition_id
         trigger_value: $trigger_value
         type_id: $type_id
