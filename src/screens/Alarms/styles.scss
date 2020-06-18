@@ -5,11 +5,13 @@
 
   .filter-bar {
     position: sticky;
+    position: -webkit-sticky;
     top: calc(5rem + 1px);
   }
 
   .toolbar {
     position: sticky;
+    position: -webkit-sticky;
     bottom: 0;
   }
 }
@@ -17,7 +19,7 @@
 @media screen and (max-width: 700px) {
   .alarms-screen {
     .filter-bar {
-      top: calc(4rem + 5px);
+      top: calc(2rem + 5px);
     }
 
     .toolbar {

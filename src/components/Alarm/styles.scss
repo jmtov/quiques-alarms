@@ -41,6 +41,7 @@
   .alarm {
     align-items: flex-start;
     flex-direction: column;
+    padding: 0;
 
     &__status {
       margin: 1rem 0;
