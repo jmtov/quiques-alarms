@@ -7,7 +7,6 @@ import { useAddAlarm } from 'hooks/useAddAlarm';
 import Icon from 'components/Icon';
 import AlarmForm from 'components/AlarmForm';
 
-import ShuffleAlarmsStateButton from './components/ShuffleAlarmsStateButton';
 import './styles.scss';
 
 function Toolbar() {
