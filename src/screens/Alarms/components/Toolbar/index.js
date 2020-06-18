@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import { cn } from 'utils/style';
 import ICONS from 'constants/icons';
@@ -10,7 +10,7 @@ import AlarmForm from 'components/AlarmForm';
 import './styles.scss';
 
 function Toolbar() {
-  const [addAlarm] = useAddAlarm();
+  const [addAlarm, { done, error, loading }] = useAddAlarm();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAdd = () => {
@@ -21,16 +21,22 @@ function Toolbar() {
     setIsAdding(false);
   }, []);
 
-  // TODO: Might need to check values before sending.
   const handleDone = useCallback(values => {
     addAlarm(values);
-    setIsAdding(false);
   }, [addAlarm]);
+
+  useEffect(() => {
+    if (done) {
+      setIsAdding(false);
+    }
+  }, [done]);
 
   return (
     <div className="toolbar">
       <AlarmForm
         className={cn('toolbar__form', !isAdding && 'toolbar__form--hidden')}
+        submitError={error}
+        submitLoading={loading}
         onReset={handleCancel}
         onSubmit={handleDone}
         isEditing={isAdding}
