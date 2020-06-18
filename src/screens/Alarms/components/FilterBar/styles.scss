@@ -6,8 +6,6 @@
   flex-wrap: wrap;
   flex-shrink: 0;
   padding: 1rem 2rem 2rem;
-  position: sticky;
-  top: calc(5rem + 1px);
   z-index: var(--z-toolbar);
 
   &__field {
@@ -43,12 +41,5 @@
     &__field {
       max-width: unset;
     }
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .filter-bar{
-    top: calc(4rem + 5px);
-
   }
 }

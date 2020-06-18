@@ -19,6 +19,7 @@ export const FIELDS = {
     component: Dropdown,
     label: 'Status Filter',
     name: 'status_filter',
+    parser: value => value === null || Number.isNaN(parseInt(value)) ? null : value,
     placeholder: 'Filter by status'
   },
 };

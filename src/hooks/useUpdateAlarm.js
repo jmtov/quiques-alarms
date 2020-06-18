@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
+
 import { GET_ALARMS_QUERY, UPDATE_ALARM_MUTATION } from 'queries/alarm';
+import AlarmsContext from 'contexts/alarms';
 
 function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
   const newAlarmData = updatedAlarmData?.data?.update_alarms?.returning?.[0];
@@ -19,7 +21,8 @@ function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
   });
 }
 
-export const useUpdateAlarm = (id, filters) => {
+export const useUpdateAlarm = (id) => {
+  const { filters } = useContext(AlarmsContext);
   const [error, setError] = useState(null);
   const [_updateAlarm, { data, error: _error, loading }] = useMutation(UPDATE_ALARM_MUTATION);
 

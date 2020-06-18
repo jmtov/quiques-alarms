@@ -1,7 +1,9 @@
 import React, { useContext, useMemo, useState, useCallback } from 'react';
 
 import StaticPropsContext from 'contexts/staticProps';
+import AlarmsContext from 'contexts/alarms';
 import ICONS from 'constants/icons';
+import { shallowCompare } from 'utils/helpers';
 
 import Field from 'components/Field';
 import Icon from 'components/Icon';
@@ -11,8 +13,9 @@ import './styles.scss';
 
 function FilterBar() {
   const { alarmStatuses } = useContext(StaticPropsContext);
+  const { filters: initialFilters, setFilters } = useContext(AlarmsContext);
+  const [values, setValues] = useState(initialFilters);
   const [, setErrors] = useState(null);
-  const [values, setValues] = useState({});
 
   const mappedStatuses = useMemo(() => {
     if (alarmStatuses?.length) {
@@ -23,9 +26,15 @@ function FilterBar() {
   }, [alarmStatuses]);
 
   const handleSubmit = event => {
-    console.log('Here');
     event.preventDefault();
-    // TODO: Add filtering function from new context TBDeveloped
+    const [hasChanged] = shallowCompare(values, initialFilters);
+
+    if (hasChanged) {
+      const name_filter = values[FIELDS.NAME_FILTER.name] || null;
+      const status_filter = values[FIELDS.STATUS_FILTER.name];
+
+      setFilters({ name_filter, status_filter });
+    }
   };
 
   const handleFieldError = useCallback(({ name: fieldName, errors: fieldErrors }) => {
@@ -46,7 +55,8 @@ function FilterBar() {
         className="filter-bar__field"
         onChange={handleFieldChange}
         onError={handleFieldError}
-        value={values[FIELDS.NAME_FILTER.name]}
+        value={values[FIELDS.NAME_FILTER.name] || ''}
+        type="search"
         {...FIELDS.NAME_FILTER}
       />
       <Field

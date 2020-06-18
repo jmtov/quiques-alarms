@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import StaticPropsContext from 'contexts/staticProps';
-import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
 import { alarmPropType } from 'propTypes/alarms';
 import { shallowCompare } from 'utils/helpers';
 import { cn } from 'utils/style';
@@ -17,7 +16,6 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialValues);
-  const [updateAlarm] = useUpdateAlarm(id);
 
   const commonFieldOptions = useMemo(() => {
     return  {
@@ -35,7 +33,6 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
     if (!hasErrors) {
       if (hasChanged) {
         onSubmit(values);
-        updateAlarm(values);
       } else {
         handleReset();
       }

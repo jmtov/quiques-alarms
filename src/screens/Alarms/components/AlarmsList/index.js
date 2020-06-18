@@ -1,7 +1,7 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ALARMS_QUERY } from 'queries/alarm';
+import { useListAlarms } from 'hooks/useListAlarms';
 
 import Alarm from 'components/Alarm';
 import Loading from 'components/Loading';
@@ -10,7 +10,7 @@ import Errored from 'components/Errored';
 import './styles.scss';
 
 function AlarmsList() {
-  const { loading, error, data } = useQuery(GET_ALARMS_QUERY);
+  const { loading, error, data } = useListAlarms(GET_ALARMS_QUERY);
 
   if (loading) return <Loading />;
   if (error) return <Errored message="Coudn't load results" />;

@@ -3,7 +3,12 @@
   flex-direction: column;
   height: 100%;
 
-  &__toolbar {
+  .filter-bar {
+    position: sticky;
+    top: calc(5rem + 1px);
+  }
+
+  .toolbar {
     position: sticky;
     bottom: 0;
   }
@@ -11,7 +16,11 @@
 
 @media screen and (max-width: 700px) {
   .alarms-screen {
-    &__toolbar {
+    .filter-bar {
+      top: calc(4rem + 5px);
+    }
+
+    .toolbar {
       bottom: 3.25rem;
     }
   }

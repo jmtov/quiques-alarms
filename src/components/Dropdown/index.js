@@ -6,12 +6,14 @@ import icons from 'constants/icons';
 
 import './styles.scss';
 
-function Dropdown({ className, disabled, id, multiple, name, options, onBlur, onChange, onFocus, value }) {
+function Dropdown({ className, disabled, id, multiple, name, options, onBlur, onChange, onFocus, value: rawValue }) {
+  const value = rawValue === null ? null : rawValue;
+
   return (
     <>
       <select
         className={`${className} select`}
-        defaultValue={Number.isNaN(value) ? null : value}
+        defaultValue={value}
         disabled={disabled}
         id={id}
         multiple={multiple}

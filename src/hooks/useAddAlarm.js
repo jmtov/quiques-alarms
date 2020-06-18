@@ -1,6 +1,8 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
+
 import { GET_ALARMS_QUERY, ADD_ALARM_MUTATION } from 'queries/alarm';
+import AlarmsContext from 'contexts/alarms';
 
 function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
   const newAlarmData = updatedAlarmData?.data?.insert_alarms?.returning?.[0];
@@ -12,7 +14,8 @@ function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
   });
 }
 
-export const useAddAlarm = filters => {
+export const useAddAlarm = () => {
+  const { filters } = useContext(AlarmsContext);
   const [_addAlarm, { data, error, loading }] = useMutation(ADD_ALARM_MUTATION);
 
   const updateCache = useCallback((cache, data) => {
@@ -22,7 +25,7 @@ export const useAddAlarm = filters => {
   // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
   const updateAlarm = useCallback(values => {
     _addAlarm({
-      variables: { ...values },
+      variables: values,
       update: updateCache
     });
   }, [_addAlarm, updateCache]);

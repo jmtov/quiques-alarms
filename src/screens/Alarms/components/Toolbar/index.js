@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { number, shape, string } from 'prop-types';
 
 import { cn } from 'utils/style';
 import ICONS from 'constants/icons';
@@ -10,7 +9,7 @@ import AlarmForm from 'components/AlarmForm';
 
 import './styles.scss';
 
-function Toolbar({ className }) {
+function Toolbar() {
   const [addAlarm] = useAddAlarm();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -29,7 +28,7 @@ function Toolbar({ className }) {
   }, [addAlarm]);
 
   return (
-    <div className={cn('toolbar', className)}>
+    <div className="toolbar">
       <AlarmForm
         className={cn('toolbar__form', !isAdding && 'toolbar__form--hidden')}
         onReset={handleCancel}
@@ -47,9 +46,5 @@ function Toolbar({ className }) {
     </div>
   );
 }
-
-Toolbar.propTypes = {
-  className: string
-};
 
 export default Toolbar;
