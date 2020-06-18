@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
+
 import { GET_ALARMS_QUERY, DELETE_ALARM_MUTATION } from 'queries/alarm';
+import AlarmsContext from 'contexts/alarms';
 
 function updateAlarmsQueryCache(cache, id, filters) {
   const existingAlarms = cache.readQuery({ query: GET_ALARMS_QUERY, variables: filters });
@@ -12,7 +14,8 @@ function updateAlarmsQueryCache(cache, id, filters) {
   });
 }
 
-export const useDeleteAlarm = (id, filters) => {
+export const useDeleteAlarm = (id) => {
+  const { filters } = useContext(AlarmsContext);
   const [error, setError] = useState(null);
   const [_deleteAlarm, { data, error: _error, loading }] = useMutation(DELETE_ALARM_MUTATION);
 

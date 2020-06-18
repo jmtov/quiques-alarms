@@ -41,12 +41,8 @@ query AlarmQuery (
 ) {
   alarms (
     order_by: { name: asc }
+    where: { name: { _ilike: $name_filter },  status_id: { _eq: $status_filter }}
   ) {
-
-  # TODO: QUERIES: Check how to structure the query data for filters to avoid queries being discarded.
-  # } (
-  #   where: { name: { _ilike: $name_filter }, status_id: { _eq: $status_filter }}
-  # ) {
     ...alarm
   }
 }

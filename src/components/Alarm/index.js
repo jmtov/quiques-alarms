@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import ICONS from 'constants/icons';
 import { alarmPropType } from 'propTypes/alarms';
+import { useUpdateAlarm } from 'hooks/useUpdateAlarm';
 
 import ActionButton from 'components/ActionButton';
 import AlarmForm from 'components/AlarmForm';
@@ -14,6 +15,7 @@ import './styles.scss';
 
 function Alarm({ id, name, source, status, previous_status, trigger_condition, trigger_value, type }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [updateAlarm] = useUpdateAlarm(id);
 
   const initialFormValues = useMemo(() => {
     return ({
@@ -33,9 +35,10 @@ function Alarm({ id, name, source, status, previous_status, trigger_condition, t
     setIsEditing(false);
   }, []);
 
-  const handleDone = useCallback(() => {
+  const handleDone = useCallback(values => {
+    updateAlarm(values);
     setIsEditing(false);
-  }, []);
+  }, [updateAlarm]);
 
   return (
     <div className="alarm">

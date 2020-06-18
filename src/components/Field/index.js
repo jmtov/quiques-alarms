@@ -16,6 +16,7 @@ function Field({
   onChange,
   onError,
   onFocus,
+  parser,
   placeholder,
   readOnly,
   tabIndex,
@@ -31,9 +32,14 @@ function Field({
   const hasErrors = useMemo(() => errors?.some(Boolean), [errors]);
 
   const handleChange = useCallback(event => {
-    setValue(event.target.value);
-    if (onChange) onChange({ name: event.target.name, value: event.target.value });
-  }, [onChange]);
+    if (parser) {
+      setValue(parser(event.target.value));
+      if (onChange) onChange({ name: event.target.name, value: parser(event.target.value) });
+    } else {
+      setValue(event.target.value);
+      if (onChange) onChange({ name: event.target.name, value: event.target.value });
+    }
+  }, [onChange, parser]);
 
   const handleBlur = useCallback(event => {
     setIsFocused(false);
@@ -101,7 +107,7 @@ function Field({
 }
 
 Field.defaultProps = {
-  component: 'input',
+  component: 'input'
 };
 
 Field.propTypes = {
@@ -116,6 +122,7 @@ Field.propTypes = {
   onChange: func,
   onError: func,
   onFocus: func,
+  parser: func,
   placeholder: string,
   readOnly: bool,
   tabIndex: number,
