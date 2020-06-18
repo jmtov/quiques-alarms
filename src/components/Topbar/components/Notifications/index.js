@@ -11,14 +11,12 @@ import styles from './styles.module.scss';
 
 const namespace = 'notification-button';
 
-// Better Error Handling
 function Notifications() {
-  const { data } = useSubscription(ALARM_SUBSCRIPTION_QUERY);
-  // TODO: Get this data from API
+  const { data, loading, error } = useSubscription(ALARM_SUBSCRIPTION_QUERY);
   const status = useMemo(() => data?.alarms ? { name: 'on', label: data.alarms.length } : null, [data]);
 
   return (
-    <ActionButton className={styles[namespace]} icon={ICONS.ERROR_OUTLINE}>
+    <ActionButton className={styles[namespace]} icon={ICONS.ERROR_OUTLINE} error={error} loading={loading}>
       {status && !!data.alarms.length && (
         <StatusIndicator
           className={styles[`${namespace}__bg`]}

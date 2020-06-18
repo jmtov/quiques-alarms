@@ -11,5 +11,6 @@ export const useListAlarms = () => {
     filters ? { variables: filters } : undefined
   );
 
+
   return { data, error, loading };
 };

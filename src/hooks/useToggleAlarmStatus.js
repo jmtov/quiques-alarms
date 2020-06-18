@@ -2,6 +2,7 @@ import { useCallback, useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
 import { GET_ALARMS_QUERY, SET_ALARM_STATE_MUTATION } from 'queries/alarm';
+import { ERRORS } from 'constants/errors';
 import { ALARM_STATUS } from 'constants/alarms';
 import AlarmsContext from 'contexts/alarms';
 
@@ -27,29 +28,37 @@ export const useToggleAlarmStatus = (id, status_id, previous_status_id) => {
   const { filters } = useContext(AlarmsContext);
   const [isPaused, setIsPaused] = useState(status_id === ALARM_STATUS.PAUSED);
   const [error, setError] = useState(null);
-  const [toggleAlarmStatus, { data, loading, _error }] = useMutation(SET_ALARM_STATE_MUTATION);
+  const [toggleAlarmStatus, { data, loading }] = useMutation(SET_ALARM_STATE_MUTATION);
 
   const updateCache = useCallback((cache, data) => {
     updateAlarmsQueryCache(cache, data, filters);
   }, [filters]);
 
   // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
-  const toggleAlarm = useCallback(() => {
-    if (!id) setError('No id provided.');
-    if (isPaused) {
-      toggleAlarmStatus({
-        variables: { id, status_id: previous_status_id, previous_status_id: 0 },
-        update: updateCache
-      });
-      setIsPaused(false);
-    } else {
-      toggleAlarmStatus({
-        variables: { id, status_id: 2, previous_status_id: status_id },
-        update: updateCache
-      });
-      setIsPaused(true);
-    }
-  }, [isPaused, id, status_id, previous_status_id, toggleAlarmStatus, updateCache]);
+  const toggleAlarm = useCallback(async () => {
+    try {
+      if (!id) throw ERRORS.NO_ID;
+      if (isPaused) {
+        await toggleAlarmStatus({
+          variables: { id, status_id: previous_status_id, previous_status_id: 0 },
+          update: updateCache
+        });
+        setIsPaused(false);
+      } else {
+        await toggleAlarmStatus({
+          variables: { id, status_id: 2, previous_status_id: status_id },
+          update: updateCache
+        });
+        setIsPaused(true);
+      }
 
-  return [toggleAlarm, { data, error: _error || error, loading }];
+      if (error) {
+        setError(null);
+      }
+    } catch(err) {
+      setError(err.id ? err : ERRORS.PAUSE_ALARM_ERROR);
+    }
+  }, [error, isPaused, id, status_id, previous_status_id, toggleAlarmStatus, updateCache]);
+
+  return [toggleAlarm, { data, error, loading }];
 };

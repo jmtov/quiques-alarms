@@ -2,6 +2,7 @@ import { useCallback, useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
 import { GET_ALARMS_QUERY, DELETE_ALARM_MUTATION } from 'queries/alarm';
+import { ERRORS } from 'constants/errors';
 import AlarmsContext from 'contexts/alarms';
 
 function updateAlarmsQueryCache(cache, id, filters) {
@@ -14,24 +15,33 @@ function updateAlarmsQueryCache(cache, id, filters) {
     variables: filters
   });
 }
-
 export const useDeleteAlarm = (id) => {
   const { filters } = useContext(AlarmsContext);
   const [error, setError] = useState(null);
-  const [_deleteAlarm, { data, error: _error, loading }] = useMutation(DELETE_ALARM_MUTATION);
+  const [deleteAlarmQuery, { data, loading }] = useMutation(DELETE_ALARM_MUTATION);
 
   const updateCache = useCallback(cache => {
     updateAlarmsQueryCache(cache, id, filters);
   }, [id, filters]);
 
   // useCallback is creating a new function even with an empty deps array ¯\_(ツ)_/¯
-  const deleteAlarm = useCallback(() => {
-    if (!id) setError('No id provided.');
-    _deleteAlarm({
-      variables: { id },
-      update: updateCache
-    });
-  }, [id, _deleteAlarm, updateCache]);
+  const deleteAlarm = useCallback(async () => {
+    try {
+      if (!id) throw ERRORS.NO_ID;
+      await deleteAlarmQuery({
+        variables: { id },
+        update: updateCache
+      });
 
-  return [deleteAlarm, { data, error: error ? error : _error, loading }];
+      if (error) {
+        setError(null);
+      }
+    } catch(err) {
+      setError(err.id ? err : ERRORS.DELETE_ALARM_ERROR);
+    }
+  }, [id, deleteAlarmQuery, error, updateCache]);
+
+
+
+  return [deleteAlarm, { data, error, loading }];
 };

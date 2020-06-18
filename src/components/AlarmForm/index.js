@@ -12,7 +12,7 @@ import Field from 'components/Field';
 import { FIELDS } from './constants';
 import './styles.scss';
 
-function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit }) {
+function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit, submitError, submitLoading }) {
   const { alarmTypes, sources, triggerConditions } = useContext(StaticPropsContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState(initialValues);
@@ -138,6 +138,9 @@ function AlarmForm({ className, id, initialValues, isEditing, onReset, onSubmit 
             onClick={handleSubmit}
             title="Save Changes"
             type="submit"
+            error={submitError}
+            disabled={submitLoading}
+            loading={submitLoading}
             icon={ICONS.DONE}
           />
           <ActionButton

@@ -6,9 +6,8 @@ import { useShuffleAlarms } from 'hooks/useShuffleAlarms';
 
 import ActionButton from 'components/ActionButton';
 
-// TODO: Improve loading and error handling
 function ShuffleAlarmsStateButton({ className }) {
-  const [shuffleAlarms, { loading }] = useShuffleAlarms();
+  const [shuffleAlarms, { loading, error }] = useShuffleAlarms();
 
   const handleClick = () => {
     if (!loading) {
@@ -20,8 +19,9 @@ function ShuffleAlarmsStateButton({ className }) {
     <ActionButton
       className={className}
       disabled={loading}
-      loading={loading}
+      error={error}
       icon={ICONS.SHUFFLE}
+      loading={loading}
       onClick={handleClick}
     />
   );
