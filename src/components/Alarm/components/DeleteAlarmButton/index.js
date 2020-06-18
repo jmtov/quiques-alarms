@@ -11,7 +11,7 @@ function DeleteAlarmButton({ id }) {
   const [deleteAlarm, { error, loading }] = useDeleteAlarm(id);
 
   return (
-    <ActionButton icon={ICONS.DELETE} title="Delete alarm" onClick={deleteAlarm} loading={loading}>
+    <ActionButton icon={ICONS.DELETE} disabled={loading} title="Delete alarm" onClick={deleteAlarm} loading={loading}>
       {error && <span>error</span>}
     </ActionButton>
   );

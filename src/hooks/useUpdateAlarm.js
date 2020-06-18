@@ -17,7 +17,8 @@ function updateAlarmsQueryCache(cache, updatedAlarmData, filters) {
 
   cache.writeQuery({
     query: GET_ALARMS_QUERY,
-    data: { alarms: newAlarms }
+    data: { alarms: newAlarms },
+    variables: filters
   });
 }
 
