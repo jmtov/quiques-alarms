@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 
 import ICONS from 'constants/icons';
 import { useShuffleAlarms } from 'hooks/useShuffleAlarms';
@@ -6,8 +7,8 @@ import { useShuffleAlarms } from 'hooks/useShuffleAlarms';
 import ActionButton from 'components/ActionButton';
 
 // TODO: Improve loading and error handling
-function ShuffleAlarmsStateButton() {
-  const [shuffleAlarms, { error, loading }] = useShuffleAlarms();
+function ShuffleAlarmsStateButton({ className }) {
+  const [shuffleAlarms, { loading }] = useShuffleAlarms();
 
   const handleClick = () => {
     if (!loading) {
@@ -16,10 +17,18 @@ function ShuffleAlarmsStateButton() {
   };
 
   return (
-    <ActionButton disabled={loading} loading={loading} icon={ICONS.SHUFFLE} onClick={handleClick}>
-      {error && <span>{error}</span>}
-    </ActionButton>
+    <ActionButton
+      className={className}
+      disabled={loading}
+      loading={loading}
+      icon={ICONS.SHUFFLE}
+      onClick={handleClick}
+    />
   );
 }
+
+ShuffleAlarmsStateButton.propTypes = {
+  className: string
+};
 
 export default ShuffleAlarmsStateButton;

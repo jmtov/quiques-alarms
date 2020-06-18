@@ -11,8 +11,9 @@ import styles from './styles.module.scss';
 
 const namespace = 'notification-button';
 
+// Better Error Handling
 function Notifications() {
-  const { data, error } = useSubscription(ALARM_SUBSCRIPTION_QUERY);
+  const { data } = useSubscription(ALARM_SUBSCRIPTION_QUERY);
   // TODO: Get this data from API
   const status = useMemo(() => data?.alarms ? { name: 'on', label: data.alarms.length } : null, [data]);
 
@@ -25,7 +26,6 @@ function Notifications() {
           label={data.alarms.length}
         />
       )}
-      {error && <span>{error}</span>}
     </ActionButton>
   );
 }
